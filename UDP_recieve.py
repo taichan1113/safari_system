@@ -4,9 +4,6 @@ from contextlib import closing
 ## UDP受信クラス
 class udprecv():
   def __init__(self):
-
-    # SrcIP = "127.0.0.1"
-    # SrcIP = gethostname()
     SrcIP = ""
     SrcPort = 22222
     self.SrcAddr = (SrcIP, SrcPort)
