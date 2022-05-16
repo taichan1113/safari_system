@@ -10,7 +10,7 @@ MY_RASPI_IP = os.getenv('MY_RASPI_IP')
 ## UDP送信クラス
 class udptrans():
   def __init__(self):
-    DstIP = "192.168.11.15" # raspberry pi IP
+    DstIP = MY_RASPI_IP # raspberry pi IP
     DstPort = 22222
     self.DstAddr = (DstIP, DstPort)
 
