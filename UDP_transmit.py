@@ -10,11 +10,13 @@ MY_RASPI_IP = os.getenv('MY_RASPI_IP')
 ## UDP送信クラス
 class udptrans():
   def __init__(self):
-    DstIP = MY_RASPI_IP # raspberry pi IP
+    # DstIP = "127.0.0.1" # test IP localhost
+    DstIP = MY_RASPI_IP
     DstPort = 22222
     self.DstAddr = (DstIP, DstPort)
 
     self.udpClntSock = socket(AF_INET, SOCK_DGRAM)
+    self.udpClntSock.setsockopt(SOL_SOCKET, SO_REUSEADDR, 1)
 
   def trsmt(self, data):
     send_data = data.encode('utf-8')
