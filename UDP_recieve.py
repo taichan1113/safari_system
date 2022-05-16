@@ -1,5 +1,6 @@
 from socket import *
 from contextlib import closing
+import struct
 
 ## UDP受信クラス
 class udprecv():
@@ -27,7 +28,7 @@ class udprecv():
       while True:
         try:
           data, addr = self.udpServSock.recvfrom(self.BUFSIZE)
-          print(data, addr)
+          print(str( struct.unpack('>d' , data)[0] ) , addr)
         except KeyboardInterrupt:
           self.udpServSock.close()
           break
