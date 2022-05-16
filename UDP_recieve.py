@@ -1,10 +1,13 @@
 from socket import *
+from contextlib import closing
 
 ## UDP受信クラス
 class udprecv():
   def __init__(self):
 
-    SrcIP = "127.0.0.1"
+    # SrcIP = "127.0.0.1"
+    # SrcIP = gethostname()
+    SrcIP = ""
     SrcPort = 22222
     self.SrcAddr = (SrcIP, SrcPort)
 
@@ -13,14 +16,15 @@ class udprecv():
     self.udpServSock.bind(self.SrcAddr)
 
   def recv(self):
-    while True:
-      try:
-        data, addr = self.udpServSock.recvfrom(self.BUFSIZE)
-        print(data.decode(), addr)
-      except KeyboardInterrupt:
-        self.udpServSock.close()
-        break
+    with closing(self.udpServSock):
+      while True:
+        try:
+          data, addr = self.udpServSock.recvfrom(self.BUFSIZE)
+          print(data.decode(), addr)
+        except KeyboardInterrupt:
+          self.udpServSock.close()
+          break
 
 if __name__ == '__main__':
-    udp = udprecv()     # クラス呼び出し
-    udp.recv()          # 関数実行
+    udp = udprecv()
+    udp.recv()
