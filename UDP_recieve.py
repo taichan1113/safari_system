@@ -12,7 +12,7 @@ class udprecv():
     self.udpServSock = socket(AF_INET, SOCK_DGRAM)
     self.udpServSock.bind(self.SrcAddr)
 
-  def recv(self):
+  def recieve_characters(self):
     with closing(self.udpServSock):
       while True:
         try:
@@ -22,6 +22,16 @@ class udprecv():
           self.udpServSock.close()
           break
 
+  def recieve_digits(self):
+    with closing(self.udpServSock):
+      while True:
+        try:
+          data, addr = self.udpServSock.recvfrom(self.BUFSIZE)
+          print(data, addr)
+        except KeyboardInterrupt:
+          self.udpServSock.close()
+          break
+
 if __name__ == '__main__':
     udp = udprecv()
-    udp.recv()
+    udp.recieve_digits()
