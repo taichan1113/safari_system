@@ -8,7 +8,7 @@ import struct
 load_dotenv('./.env')
 MY_RASPI_IP = os.getenv('MY_RASPI_IP')
 
-## UDP送信クラス
+## UDP送信クラスUDP_transmit.py
 class udptrans():
   def __init__(self):
     DstIP = "127.0.0.1" # test IP localhost
@@ -32,9 +32,11 @@ class udptrans():
 if __name__ == '__main__':
   udp = udptrans()
   with closing(udp.udpClntSock):
+    data = 0
     while True:
       try:
-        udp.transmit_digits(1)
+        udp.transmit_digits(data)
+        data += 1
         time.sleep(1)
       except KeyboardInterrupt:
         udp.udpClntSock.close()
