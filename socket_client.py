@@ -1,10 +1,18 @@
+from dotenv import load_dotenv
+import os
+
 # ソケットライブラリ取り込み
 import socket
 
+load_dotenv('./.env')
+MY_RASPI_IP = os.getenv('MY_RASPI_IP')
+
 # サーバーIPとポート番号
 # IPADDR = "127.0.0.1"
-IPADDR = "192.168.11.2"
-PORT = 49152
+# IPADDR = "192.168.11.2"
+IPADDR = MY_RASPI_IP
+print(IPADDR)
+PORT = 8000
 
 # ソケット作成
 sock = socket.socket(socket.AF_INET)
