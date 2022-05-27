@@ -3,8 +3,11 @@ import socket
 
 # サーバーIPとポート番号
 # IPADDR = "127.0.0.1"
-IPADDR = "192.168.11.2"
-PORT = 49152
+# IPADDR = "192.168.11.2"
+IPADDR = socket.gethostname()
+PORT = 8000
+
+print(IPADDR)
 
 # AF_INET：IPv4形式でソケット作成(省略可)
 sock_sv = socket.socket(socket.AF_INET)
