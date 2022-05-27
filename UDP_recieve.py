@@ -41,6 +41,6 @@ if __name__ == '__main__':
     try:
       data, addr = udp.receive()
       digits = struct.unpack('>d' , data)[0]
-      servo.setAngle(digits*90)
+      servo.setAngle(digits*-90)
     except KeyboardInterrupt:
       break
