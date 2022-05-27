@@ -2,7 +2,7 @@ from socket import *
 from contextlib import closing
 import struct
 import time
-# from controller.run_servo import Servo
+from controller.run_servo import Servo
 
 ## UDP受信クラス
 class udprecv():
@@ -21,7 +21,10 @@ class udprecv():
     except KeyboardInterrupt:
       self.udpServSock.close()
     return data, addr
-
+  
+  def receive_handler(self, callback):
+    data, addr = self.recieve()
+    callback(data)
 
   def recieve_characters(self):
     while True:
@@ -35,10 +38,13 @@ class udprecv():
 
 if __name__ == '__main__':
     udp = udprecv()
+    servo = Servo()
+    servo.init()
     # udp.recieve_digits()
     while True:
       data, addr = udp.recieve()
       digits = struct.unpack('>d' , data)[0]
+      servo.setAngle(digits*90)
       print(f'{digits*90.0} [deg]')
       # time.sleep(0.5)
 
