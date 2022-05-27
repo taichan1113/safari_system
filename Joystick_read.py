@@ -21,7 +21,7 @@ while True:
     for e in pygame.event.get():
       if e.type == QUIT:
         break
-      if time.time() - now < 0.1:
+      if time.time() - now < 0.02:
         continue
       
       if e.type == pygame.locals.JOYAXISMOTION:
