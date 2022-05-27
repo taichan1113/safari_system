@@ -18,7 +18,7 @@ class Servo:
     dc = 2.5 + (12.0-2.5)/180*(angle+90)
     
     self.pwm.ChangeDutyCycle(dc)
-    time.sleep(0.1)
+    time.sleep(0.02)
     self.pwm.ChangeDutyCycle(0.0)
 
 if __name__ == "__main__":
@@ -28,11 +28,8 @@ if __name__ == "__main__":
   incliment = 1
   while True:
     try:
+      print(angle)
       servo.setAngle(angle)
     except KeyboardInterrupt:
       break
-    if angle >= 90:
-      incliment = -1
-    else:
-      incliment = 1
-    angle = angle + incliment
+    angle = (angle + incliment + 90)%180 - 90
