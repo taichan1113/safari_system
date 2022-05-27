@@ -1,6 +1,8 @@
 from socket import *
 from contextlib import closing
 import struct
+import time
+# from controller.run_servo import Servo
 
 ## UDP受信クラス
 class udprecv():
@@ -13,26 +15,30 @@ class udprecv():
     self.udpServSock = socket(AF_INET, SOCK_DGRAM)
     self.udpServSock.bind(self.SrcAddr)
 
+  def recieve(self):
+    try:
+      data, addr = self.udpServSock.recvfrom(self.BUFSIZE)
+    except KeyboardInterrupt:
+      self.udpServSock.close()
+    return data, addr
+
+
   def recieve_characters(self):
-    with closing(self.udpServSock):
-      while True:
-        try:
-          data, addr = self.udpServSock.recvfrom(self.BUFSIZE)
-          print(data.decode(), addr)
-        except KeyboardInterrupt:
-          self.udpServSock.close()
-          break
+    while True:
+      data, addr = self.recieve()
+      print(data.decode(), addr)
 
   def recieve_digits(self):
-    with closing(self.udpServSock):
-      while True:
-        try:
-          data, addr = self.udpServSock.recvfrom(self.BUFSIZE)
-          print(str( struct.unpack('>d' , data)[0] ) , addr)
-        except KeyboardInterrupt:
-          self.udpServSock.close()
-          break
+    while True:
+      data, addr = self.recieve()
+      print(str( struct.unpack('>d' , data)[0] ) , addr)
 
 if __name__ == '__main__':
     udp = udprecv()
-    udp.recieve_digits()
+    # udp.recieve_digits()
+    while True:
+      data, addr = udp.recieve()
+      digits = struct.unpack('>d' , data)[0]
+      print(f'{digits*90.0} [deg]')
+      # time.sleep(0.5)
+

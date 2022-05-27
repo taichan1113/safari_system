@@ -11,8 +11,8 @@ MY_RASPI_IP = os.getenv('MY_RASPI_IP')
 ## UDP送信クラスUDP_transmit.py
 class udptrans():
   def __init__(self):
-    # DstIP = "127.0.0.1" # test IP localhost
-    DstIP = MY_RASPI_IP
+    DstIP = "127.0.0.1" # test IP localhost
+    # DstIP = MY_RASPI_IP
     DstPort = 22222
     self.DstAddr = (DstIP, DstPort)
 
@@ -35,7 +35,7 @@ if __name__ == '__main__':
     data = 0
     while True:
       try:
-        udp.transmit_digits('hello')
+        udp.transmit_digits(data)
         data += 1
         time.sleep(1)
       except KeyboardInterrupt:

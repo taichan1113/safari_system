@@ -1,6 +1,5 @@
 import pygame
 from pygame.locals import *
-import time
 from UDP_transmit import udptrans as Trans
 
 # pygame初期化
@@ -22,8 +21,8 @@ while True:
         break
       
       if e.type == pygame.locals.JOYAXISMOTION:
-        print('ジョイスティック:', joystick.get_axis(0), joystick.get_axis(1), joystick.get_axis(2), joystick.get_axis(3))
-        # trans.transmit_digits(joystick.get_axis(0))
+        # print('ジョイスティック:', joystick.get_axis(0), joystick.get_axis(1), joystick.get_axis(2), joystick.get_axis(3))
+        trans.transmit_digits(joystick.get_axis(0))
       elif e.type == pygame.locals.JOYBUTTONDOWN:
         print(f'ボタン{e.button}を押した')
       elif e.type == pygame.locals.JOYBUTTONUP:
