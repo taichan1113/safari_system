@@ -1,6 +1,6 @@
 import pygame
 from pygame.locals import *
-from UDP_transmit import udptrans as Trans
+from communication.UDP_transmit import udptrans as Trans
 import time
 
 # pygame初期化
