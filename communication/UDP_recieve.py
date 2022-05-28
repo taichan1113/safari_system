@@ -1,5 +1,5 @@
 from socket import *
-from contextlib import closing
+# from contextlib import closing
 import struct
 from controller.run_servo import Servo
 
@@ -22,19 +22,15 @@ class udprecv():
     return data, addr
 
   def receive_characters(self):
-    while True:
-      data, addr = self.receive()
-      print(data.decode(), addr)
+    data, addr = self.receive()
+    return data.decode()
 
   def receive_digits(self):
-    while True:
-      data, addr = self.receive()
-      print(str( struct.unpack('>d' , data)[0] ), addr)
-
+    data, addr = self.receive()
+    return struct.unpack('>d' , data)
 
 if __name__ == '__main__':
   udp = udprecv()
-  # udp.receive_digits()
   servo = Servo()
   servo.init()
   while True:
@@ -43,4 +39,5 @@ if __name__ == '__main__':
       digits = struct.unpack('>d' , data)[0]
       servo.setAngle(digits*-90)
     except KeyboardInterrupt:
+      udp.udpServSock.close()
       break

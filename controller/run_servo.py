@@ -12,13 +12,13 @@ class Servo:
   def init(self):
     self.pwm.start(0)
   
-  def setAngle(self, angle):
+  def setAngle(self, angle, duration=0.02):
     angle = max([angle, -90])
     angle = min([angle, 90])
     dc = 2.5 + (12.0-2.5)/180*(angle+90)
     
     self.pwm.ChangeDutyCycle(dc)
-    time.sleep(0.02)
+    time.sleep(duration)
     self.pwm.ChangeDutyCycle(0.0)
 
 if __name__ == "__main__":
