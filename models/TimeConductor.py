@@ -1,6 +1,6 @@
 import time
 from communication import UDP_recieve
-from Steering import Steering
+from models.Steering import Steering
 
 class TimeConductor:
   def __init__(self):
