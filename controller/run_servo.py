@@ -6,6 +6,7 @@ SERVO_PIN = 17
 class Servo:
   def __init__(self):
     GPIO.setmode(GPIO.BCM)
+    GPIO.setwarnings(False)
     GPIO.setup(SERVO_PIN, GPIO.OUT)
     self.pwm = GPIO.PWM(SERVO_PIN, 50)
 
