@@ -13,7 +13,7 @@ class Servo:
   def init(self):
     self.pwm.start(0)
   
-  def setAngle(self, angle, duration=0.02):
+  def setAngle(self, angle, duration=0.5):
     angle = max([angle, -90])
     angle = min([angle, 90])
     dc = 2.5 + (12.0-2.5)/180*(angle+90)
