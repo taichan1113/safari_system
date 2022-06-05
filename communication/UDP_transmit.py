@@ -25,9 +25,8 @@ class udptrans():
 
   def transmit_digits(self, data):
     send_data = struct.pack('>ddd', data[0], data[1], data[2])
-    print("send: ", send_data) #送信したバイト列を送信側に表示
+    print("send: ", struct.unpack('>ddd', send_data)) #送信したデータを送信側に表示
     self.udpClntSock.sendto(send_data, self.DstAddr)
-
 
 if __name__ == '__main__':
   udp = udptrans()
