@@ -35,7 +35,7 @@ if __name__ == "__main__":
             servo.setAngle(angle, duration=0)
 #             time.sleep(0.01)
     except KeyboardInterrupt:
-        servo.setAngle(0)
+        servo.setAngle(0, duration = 0.5)
         servo.pi.set_mode(PIN,pigpio.INPUT)
         servo.pi.stop()
 

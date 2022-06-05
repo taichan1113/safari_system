@@ -18,6 +18,10 @@ class udprecv():
       data, addr = self.udpServSock.recvfrom(self.BUFSIZE)
     except KeyboardInterrupt:
       self.udpServSock.close()
+      data = None
+      addr = None
+    finally:
+      self.udpServSock.close()
     return data, addr
 
   def receive_characters(self):
