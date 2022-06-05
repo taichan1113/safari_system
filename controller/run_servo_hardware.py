@@ -1,5 +1,6 @@
 import pigpio
 import time
+import numpy as np
 
 PIN = 18
 
@@ -11,7 +12,7 @@ class Servo:
         self.freq = int(50) # [Hz]
         
         
-    def setAngle(self, angle, duration=0.5):
+    def setAngle(self, angle, duration=0.01):
         angle = max([angle, -90])
         angle = min([angle, 90])
         dc = 2.5 + (12.0-2.5)/180*(angle+90) # duty cycle [%]
@@ -22,15 +23,19 @@ class Servo:
         time.sleep(duration)
 
 if __name__ == "__main__":
+    print('start')
     servo = Servo()
-    angle = 0
-    incliment = 10
-    for i in range(100):
-        print(angle)
-        servo.setAngle(angle, duration=0.1)
-        angle = (angle + incliment + 90)%180 - 90
-    
-    servo.setAngle(0)
-    servo.pi.set_mode(PIN,pigpio.INPUT)
-    servo.pi.stop()
+    T = 2
+    w = 2*np.pi/T
+    t0 = time.time()
+    try:
+        while True:
+            t = time.time() - t0
+            angle = 90 * np.sin(w*t)
+            servo.setAngle(angle, duration=0)
+#             time.sleep(0.01)
+    except KeyboardInterrupt:
+        servo.setAngle(0)
+        servo.pi.set_mode(PIN,pigpio.INPUT)
+        servo.pi.stop()
 

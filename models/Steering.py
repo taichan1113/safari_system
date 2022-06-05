@@ -6,6 +6,6 @@ class Steering:
     self.actuator = Servo()
 #     self.actuator.init()
 
-  def actuate(self, data, duration):
+  def actuate(self, data):
     angle = data * self.gear_ratio
-    self.actuator.setAngle(angle, duration)
+    self.actuator.setAngle(angle)

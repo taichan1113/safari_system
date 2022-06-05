@@ -20,7 +20,7 @@ class TimeConductor:
       self.now = time.time()
       data = self.reciever.receive_digits() # 0:steering, 1:accel, 2:break
       driving.actuate([data[1], data[2]])
-      steering.actuate(data[0], self.sampling_time)
+      steering.actuate(data[0])
 
 if __name__ == '__main__':
   tc = TimeConductor()
