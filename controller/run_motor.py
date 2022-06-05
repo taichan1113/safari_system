@@ -9,6 +9,7 @@ class DCMotor():
         self.freq = 10
         self.lowestDutyCycle = 20
         GPIO.setmode(GPIO.BCM)
+        GPIO.setwarnings(False)
         GPIO.setup(self.PIN_IN1, GPIO.OUT)
         GPIO.setup(self.PIN_IN2, GPIO.OUT)
         self.pDrive = GPIO.PWM(self.PIN_IN1, self.freq)
