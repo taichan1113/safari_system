@@ -54,7 +54,7 @@ if __name__ == "__main__":
         for i in range(5):
             dc = 20 + i*10
             motor.drive(dc)
-            time.sleep(5)
+            time.sleep(3)
         motor.stop()
     except KeyboardInterrupt:
         motor.stop()
