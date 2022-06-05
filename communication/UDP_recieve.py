@@ -16,14 +16,11 @@ class udprecv():
   def receive(self):
     try:
       data, addr = self.udpServSock.recvfrom(self.BUFSIZE)
-    except KeyboardInterrupt:
-      self.udpServSock.close()
-      data = None
-      addr = None
-    finally:
-      self.udpServSock.close()
-    return data, addr
-
+      return data, addr
+    except Exception as e:
+      print(e)
+      pass
+    
   def receive_characters(self):
     data, addr = self.receive()
     return data.decode()
@@ -34,11 +31,11 @@ class udprecv():
 
 if __name__ == '__main__':
   udp = udprecv()
-
-  try:
-    while True:
-      data, addr = udp.receive()
-      digits = struct.unpack('>ddd' , data)
-      print(digits)
-  except KeyboardInterrupt:
-    udp.udpServSock.close()
+  while True:
+    try:
+      data = udp.receive_digits()
+      print(data)
+    except Exception as e:
+      print(e)
+      break
+  udp.udpServSock.close()
