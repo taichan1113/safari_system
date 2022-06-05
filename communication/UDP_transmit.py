@@ -6,13 +6,13 @@ import os
 import struct
 
 load_dotenv('./.env')
-MY_RASPI_IP = os.getenv('MY_RASPI_IP')
+KB_RASPI_IP = os.getenv('KB_RASPI_IP')
 
 ## UDP送信クラスUDP_transmit.py
 class udptrans():
   def __init__(self):
     # DstIP = "127.0.0.1" # test IP localhost
-    DstIP = MY_RASPI_IP
+    DstIP = KB_RASPI_IP
     DstPort = 22222
     self.DstAddr = (DstIP, DstPort)
 
