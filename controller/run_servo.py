@@ -9,10 +9,8 @@ class Servo:
     GPIO.setwarnings(False)
     GPIO.setup(SERVO_PIN, GPIO.OUT)
     self.pwm = GPIO.PWM(SERVO_PIN, 50)
-
-  def init(self):
     self.pwm.start(0)
-  
+
   def setAngle(self, angle, duration=0.5):
     angle = max([angle, -90])
     angle = min([angle, 90])

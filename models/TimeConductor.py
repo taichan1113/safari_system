@@ -9,6 +9,7 @@ class TimeConductor:
     self.now = None
 
   def runSystem(self):
+    print("system running")
     steering = Steering()
     self.now = time.time()
     while True:
