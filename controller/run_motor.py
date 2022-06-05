@@ -17,11 +17,15 @@ class DCMotor():
         self.pDrive.start(0)
         self.pBack.start(0)
     
-    def drive(self, dutyCycle):
+    def CCW(self, dutyCycle):
+        dutyCycle = min([dutyCycle, 100])
+        dutyCycle = max([dutyCycle, 0])
         self.pDrive.ChangeDutyCycle(dutyCycle)
         self.pBack.ChangeDutyCycle(0)
 
-    def back(self, dutyCycle):
+    def CW(self, dutyCycle):
+        dutyCycle = min([dutyCycle, 100])
+        dutyCycle = max([dutyCycle, 0])
         self.pDrive.ChangeDutyCycle(0)
         self.pBack.ChangeDutyCycle(dutyCycle)
 

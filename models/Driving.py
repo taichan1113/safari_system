@@ -5,10 +5,10 @@ class Driving:
     self.actuator = DCMotor()
 
   def forward(self, accelOpening):
-    self.actuator.drive(-accelOpening)
+    self.actuator.CW(accelOpening)
 
   def backward(self, accelOpening):
-    self.actuator.back(-accelOpening)
+    self.actuator.CCW(accelOpening)
 
   def stop(self):
     self.actuator.stop()
@@ -17,6 +17,7 @@ class Driving:
     accelPedal = data[0]
     breakPedal = data[1]
     if breakPedal < 0.6:
+      print('stop')
       self.stop()
     else:
       self.forward( (-accelPedal + 1) * 50 )

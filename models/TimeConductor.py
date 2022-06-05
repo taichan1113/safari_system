@@ -18,7 +18,7 @@ class TimeConductor:
       if time.time() - self.now < self.sampling_time:
         continue
       self.now = time.time()
-      data = self.reciever.receive_digits()
+      data = self.reciever.receive_digits() # 0:steering, 1:accel, 2:break
       driving.actuate([data[1], data[2]])
       steering.actuate(data[0], self.sampling_time)
 

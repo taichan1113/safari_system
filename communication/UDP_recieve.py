@@ -27,7 +27,7 @@ class udprecv():
 
   def receive_digits(self):
     data, addr = self.receive()
-    return struct.unpack('>d' , data)
+    return struct.unpack('>ddd' , data)
 
 if __name__ == '__main__':
   udp = udprecv()
