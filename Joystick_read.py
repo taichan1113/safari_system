@@ -26,8 +26,7 @@ while True:
       
       if e.type == pygame.locals.JOYAXISMOTION:
         # print('ジョイスティック:', joystick.get_axis(0), joystick.get_axis(1), joystick.get_axis(2), joystick.get_axis(3))
-        print([joystick.get_axis(0), joystick.get_axis(1)])
-        # trans.transmit_digits(joystick.get_axis(0))
+        trans.transmit_digits([joystick.get_axis(0), joystick.get_axis(1), joystick.get_axis(2)])
       elif e.type == pygame.locals.JOYBUTTONDOWN:
         print(f'ボタン{e.button}を押した')
       elif e.type == pygame.locals.JOYBUTTONUP:
