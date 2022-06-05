@@ -1,4 +1,4 @@
-from controller.run_servo import Servo
+from controller.run_servo_hardware import Servo
 
 class Steering:
   def __init__(self):

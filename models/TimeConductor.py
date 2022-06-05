@@ -4,7 +4,7 @@ from models.Steering import Steering
 
 class TimeConductor:
   def __init__(self):
-    self.sampling_time = 0.02
+    self.sampling_time = 0.1
     self.reciever = UDP_recieve.udprecv()
     self.now = None
 
