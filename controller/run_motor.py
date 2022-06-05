@@ -1,5 +1,6 @@
 import RPi.GPIO as GPIO
 import sys
+import time
 
 class DCMotor():
     def __init__(self):
@@ -27,22 +28,36 @@ class DCMotor():
         self.pDrive.ChangeDutyCycle(0)
         self.pBack.ChangeDutyCycle(0)
         
-
-if __name__ == "__main__":
+def test_function():
     motor = DCMotor()
+    dc = 30
     try:
         print('system running')
         while True:
             #「e」キーが押されたら前進
             c = sys.stdin.read(1)
             if c == 'e':
-                motor.drive()
+                motor.drive(dc)
             #「d」キーが押されたら後退
             if c == 'd':
-                motor.back()
+                motor.back(dc)
             #「q」キーが押されたら止まる
             if c == 'q':
                 motor.stop()
     except KeyboardInterrupt:
         pass
+
+if __name__ == "__main__":
+    print('system running')
+    motor = DCMotor()
+    try:
+        for i in range(5):
+            dc = 20 + i*10
+            motor.drive(dc)
+            time.sleep(5)
+        motor.stop()
+    except KeyboardInterrupt:
+        motor.stop()
+        pass
+        
     GPIO.cleanup()
