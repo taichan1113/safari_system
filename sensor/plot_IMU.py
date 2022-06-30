@@ -6,8 +6,8 @@ import matplotlib.pyplot as plt
 def plot_IMU():
     sensor = mpu6050(0x68)
     
-    sampling_time = 0.05
-    time_length = 5
+    sampling_time = 0.01
+    time_length = 2
     array_length = int(time_length/sampling_time)
     sec = np.arange(0, time_length, sampling_time)
     acc_gyro_array = np.zeros([array_length, 6])
