@@ -7,7 +7,7 @@ class UI:
   def __init__(self, type='handle controller'):
     # pygame初期化
     pygame.init()
-    self.joystick = pygame.joystick.Joystick(1)
+    self.joystick = pygame.joystick.Joystick(0)
     self.joystick.init()
     print(f'ジョイスティック名前: {self.joystick.get_name()}')
     print(f'ボタン数: {self.joystick.get_numbuttons()}')
@@ -15,7 +15,7 @@ class UI:
     # 通信手段
     self.trans = Trans()
     # 時間制御
-    self.rap_time = 0.01
+    self.rap_time = 0.1
     self.now = time.time()
     # コントローラータイプ
     self.type = type
@@ -49,12 +49,13 @@ class UI:
             break
           if time.time() - self.now < self.rap_time:
             continue
-          self.printSignal(e)
+          # self.printSignal(e)
+          self.transmitSignal(e)
           self.now = time.time()
 
       except KeyboardInterrupt:
         break
 
 if __name__ == "__main__":
-  ui = UI(type='handle controller')
+  ui = UI(type='joystick controller')
   ui.run()
