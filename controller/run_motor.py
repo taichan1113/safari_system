@@ -4,9 +4,9 @@ import time
 
 class DCMotor():
     def __init__(self):
-        self.PIN_IN1 = 13
-        self.PIN_IN2 = 19
-        self.freq = 10
+        self.PIN_IN1 = 5
+        self.PIN_IN2 = 6
+        self.freq = 10 # 10
         self.lowestDutyCycle = 20
         GPIO.setmode(GPIO.BCM)
         GPIO.setwarnings(False)
@@ -39,16 +39,21 @@ def test_function():
     try:
         print('system running')
         while True:
-            #「e」キーが押されたら前進
             c = sys.stdin.read(1)
+            #「e」キーが押されたら前進
             if c == 'e':
                 motor.CW(dc)
+                print('clockwise')
             #「d」キーが押されたら後退
-            if c == 'd':
+            elif c == 'd':
                 motor.CCW(dc)
+                print('counter-clockwise')
             #「q」キーが押されたら止まる
-            if c == 'q':
+            elif c == 'q':
                 motor.stop()
+                print('stop')
+            else:
+                print('invalid input')
     except KeyboardInterrupt:
         pass
 
