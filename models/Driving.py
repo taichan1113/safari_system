@@ -16,9 +16,10 @@ class Driving:
   def actuate(self, data):
     accelPedal = data[0]
     breakPedal = data[1]
-    if breakPedal < 0.6:
-      print('stop')
+    if accelPedal > 0.9 and breakPedal > 0.9:
       self.stop()
+    elif breakPedal < accelPedal:
+      self.backward( (-breakPedal + 1) * 50)
     else:
       self.forward( (-accelPedal + 1) * 50 )
     return
