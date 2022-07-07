@@ -42,10 +42,10 @@ def test_function():
             #「e」キーが押されたら前進
             c = sys.stdin.read(1)
             if c == 'e':
-                motor.drive(dc)
+                motor.CW(dc)
             #「d」キーが押されたら後退
             if c == 'd':
-                motor.back(dc)
+                motor.CCW(dc)
             #「q」キーが押されたら止まる
             if c == 'q':
                 motor.stop()
@@ -54,15 +54,16 @@ def test_function():
 
 if __name__ == "__main__":
     print('system running')
-    motor = DCMotor()
-    try:
-        for i in range(5):
-            dc = 20 + i*10
-            motor.drive(dc)
-            time.sleep(3)
-        motor.stop()
-    except KeyboardInterrupt:
-        motor.stop()
-        pass
+    test_function()
+    # motor = DCMotor()
+    # try:
+    #     for i in range(5):
+    #         dc = 20 + i*10
+    #         motor.CW(dc)
+    #         time.sleep(3)
+    #     motor.stop()
+    # except KeyboardInterrupt:
+    #     motor.stop()
+    #     pass
         
     GPIO.cleanup()
