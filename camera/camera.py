@@ -3,21 +3,23 @@ import time
 
 class ThetaV():
   def __init__(self):
-    self.IP = 'xxx.xxx.xxx.xxx'
+    self.protocol = 'http://'
+    self.IP = '192.168.1.1'
+    self.address = self.protocol + self.IP
 
   def info(self):
-    url = self.IP + '/osc/info'
+    url = self.address + '/osc/info'
     r = requests.get(url)
     return r
 
   def state(self):
-    url = self.IP + '/osc/state'
+    url = self.address + '/osc/state'
     r = requests.post(url)
     return r
 
   def execute(self, command_name, parameters=None):
     payload = {'name':command_name, 'parameters':parameters}
-    url = self.IP + '/osc/commands/execute'
+    url = self.address + '/osc/commands/execute'
     r = requests.post(url, data=payload)
     return r
 
@@ -35,10 +37,12 @@ if __name__ == '__main__':
   # zip_test(6340004)
   # prm_test('test')
   camera = ThetaV()
-  camera.execute('camera.tekePicture')
-  time.sleep(1)
-  res = camera.state()
-  print(res.json()['_latestFileUrl'])
-  data = camera.execute('camera.getLivePreview')
+  r = camera.info()
+  print(r)
+  # camera.execute('camera.tekePicture')
+  # time.sleep(1)
+  # res = camera.state()
+  # print(res.json()['_latestFileUrl'])
+  # data = camera.execute('camera.getLivePreview')
   
 
