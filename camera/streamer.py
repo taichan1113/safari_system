@@ -11,9 +11,9 @@ import os
 def getimage():
 
     # 送信先のIPアドレスとポート番号を設定
-    # HOST = "127.0.0.1"
+    HOST = "127.0.0.1"
     # HOST = KB_RASPI_IP
-    HOST = "192.168.11.25"
+    # HOST = "192.168.11.25"
     PORT = 8080
     sock=socket.socket(socket.AF_INET,socket.SOCK_STREAM)  
     sock.connect((HOST,PORT))   

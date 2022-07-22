@@ -13,8 +13,9 @@ KB_RASPI_IP = os.getenv('KB_RASPI_IP')
 ## UDP送信クラスUDP_transmit.py
 class udptrans():
   def __init__(self):
-    DstIP = "127.0.0.1" # test IP localhost
+    # DstIP = "127.0.0.1" # test IP localhost
     # DstIP = KB_RASPI_IP
+    DstIP = "192.168.11.25"
     DstPort = 22222
     self.DstAddr = (DstIP, DstPort)
 
