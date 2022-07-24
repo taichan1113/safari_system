@@ -1,9 +1,9 @@
 import csv
-from sensor.mpu6050 import mpu6050
+from mpu6050 import mpu6050
 
 class DataLogger:
   def __init__(self):
-    self.sensor = mpu6050(0x68)
+    self.sensor = mpu6050(0x69)
 
   def log(self):
     try:
