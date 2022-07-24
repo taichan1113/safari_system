@@ -37,8 +37,8 @@ class TCPHandler(socketserver.BaseRequestHandler):
 
 
 # このプログラムを起動している端末のIPアドレス
-HOST = "127.0.0.1"
-# HOST = KB_RASPI_IP
+#HOST = "127.0.0.1"
+HOST = "192.168.11.25"
 PORT = 8080
 
 # ビデオの設定

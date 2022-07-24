@@ -3,7 +3,7 @@ import threading
 from models.TimeConductor import TimeConductor
 
 tc = TimeConductor()
-tc.runActuator()
+# tc.runActuator()
 
-# thread_system = threading.Thread(target=tc.runActuator())
-# thread_system.run()
+thread_system = threading.Thread(target=tc.runActuator())
+thread_system.run()
