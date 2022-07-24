@@ -1,5 +1,5 @@
 import csv
-from mpu6050 import mpu6050
+from sensor.mpu6050 import mpu6050
 
 class DataLogger:
   def __init__(self):
