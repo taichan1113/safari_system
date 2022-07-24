@@ -6,7 +6,7 @@ import matplotlib.pyplot as plt
 def plot_IMU():
     sensor = mpu6050(0x68)
     
-    sampling_time = 0.01
+    sampling_time = 0.1
     time_length = 2
     array_length = int(time_length/sampling_time)
     sec = np.arange(0, time_length, sampling_time)
@@ -156,4 +156,11 @@ def plot_loop():
         plt.pause(0.1) # sleep時間（秒）
 
 if __name__ == "__main__":
-    plot_IMU()
+#     plot_IMU()
+    mpu = mpu6050(0x68)
+    while True:
+        accel_data = mpu.get_accel_data()
+        gyro_data = mpu.get_gyro_data()
+        print("【加速度】 x:" + "%6.3f" % accel_data['x'] + " y:" + "%6.3f" % accel_data['y'] + " z:" + "%6.3f" % accel_data['z'])
+        print("【角速度】 x:" + "%6.3f" % gyro_data['x'] + " y:" + "%6.3f" % gyro_data['y'] + " z:" + "%6.3f" % gyro_data['z'])
+        time.sleep(0.1)

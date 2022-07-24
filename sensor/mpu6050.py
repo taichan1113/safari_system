@@ -262,13 +262,18 @@ class mpu6050:
 
 if __name__ == "__main__":
     mpu = mpu6050(0x68)
-    print(mpu.get_accel_data()['x'])
+    while True:
+#     print(mpu.get_accel_data()['x'])
 #     print(mpu.get_temp())
-#     accel_data = mpu.get_accel_data()
+        accel_data = mpu.get_accel_data()
 #     print(accel_data['x'])
 #     print(accel_data['y'])
 #     print(accel_data['z'])
-#     gyro_data = mpu.get_gyro_data()
+        gyro_data = mpu.get_gyro_data()
 #     print(gyro_data['x'])
 #     print(gyro_data['y'])
 #     print(gyro_data['z'])
+        print("【加速度】 x:" + "%6.3f" % accel_data['x'] + " y:" + "%6.3f" % accel_data['y'] + " z:" + "%6.3f" % accel_data['z'])
+        print("【角速度】 x:" + "%6.3f" % gyro_data['x'] + " y:" + "%6.3f" % gyro_data['y'] + " z:" + "%6.3f" % gyro_data['z'])
+
+
