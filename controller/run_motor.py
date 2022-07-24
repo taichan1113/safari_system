@@ -4,8 +4,8 @@ import time
 
 class DCMotor():
     def __init__(self):
-        self.PIN_IN1 = 5
-        self.PIN_IN2 = 6
+        self.PIN_IN1 = 13
+        self.PIN_IN2 = 19
         self.freq = 10 # 10
         self.lowestDutyCycle = 20
         GPIO.setmode(GPIO.BCM)
