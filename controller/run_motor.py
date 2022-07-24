@@ -6,7 +6,7 @@ class DCMotor():
     def __init__(self):
         self.PIN_IN1 = 13
         self.PIN_IN2 = 19
-        self.freq = 10
+        self.freq = 10 # 10
         self.lowestDutyCycle = 20
         GPIO.setmode(GPIO.BCM)
         GPIO.setwarnings(False)
@@ -39,30 +39,36 @@ def test_function():
     try:
         print('system running')
         while True:
-            #「e」キーが押されたら前進
             c = sys.stdin.read(1)
+            #「e」キーが押されたら前進
             if c == 'e':
-                motor.drive(dc)
+                motor.CW(dc)
+                print('clockwise')
             #「d」キーが押されたら後退
-            if c == 'd':
-                motor.back(dc)
+            elif c == 'd':
+                motor.CCW(dc)
+                print('counter-clockwise')
             #「q」キーが押されたら止まる
-            if c == 'q':
+            elif c == 'q':
                 motor.stop()
+                print('stop')
+            else:
+                print('invalid input')
     except KeyboardInterrupt:
         pass
 
 if __name__ == "__main__":
     print('system running')
-    motor = DCMotor()
-    try:
-        for i in range(5):
-            dc = 20 + i*10
-            motor.drive(dc)
-            time.sleep(3)
-        motor.stop()
-    except KeyboardInterrupt:
-        motor.stop()
-        pass
+    test_function()
+    # motor = DCMotor()
+    # try:
+    #     for i in range(5):
+    #         dc = 20 + i*10
+    #         motor.CW(dc)
+    #         time.sleep(3)
+    #     motor.stop()
+    # except KeyboardInterrupt:
+    #     motor.stop()
+    #     pass
         
     GPIO.cleanup()

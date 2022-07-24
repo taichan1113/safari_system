@@ -1,6 +1,7 @@
 from socket import *
-# from contextlib import closing
+import numpy as np
 import struct
+import cv2
 
 ## UDP受信クラス
 class udprecv():
@@ -29,12 +30,31 @@ class udprecv():
     data, addr = self.receive()
     return struct.unpack('>ddd' , data)
 
-if __name__ == '__main__':
+  def receive_img(self):
+    img_buffer = 400000
+    data, addr = self.udpServSock.recvfrom(img_buffer)
+    np_arr = np.fromstring(data, np.uint8)
+    img_decode = cv2.imdecode(np_arr, cv2.IMREAD_COLOR)
+    return img_decode
+
+def recieve_digits_test():
   udp = udprecv()
   while True:
     try:
       data = udp.receive_digits()
       print(data)
+    except Exception as e:
+      print(e)
+      break
+  udp.udpServSock.close()
+
+if __name__ == '__main__':
+  udp = udprecv()
+  while True:
+    try:
+      data = udp.receive_img()
+      cv2.imshow('result', data)
+      
     except Exception as e:
       print(e)
       break

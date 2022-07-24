@@ -9,8 +9,8 @@ class TimeConductor:
     self.reciever = UDP_recieve.udprecv()
     self.now = None
 
-  def runSystem(self):
-    print("system running")
+  def runActuator(self):
+    print("Actuator running")
     driving = Driving()
     steering = Steering()
     self.now = time.time()
@@ -29,4 +29,4 @@ class TimeConductor:
 
 if __name__ == '__main__':
   tc = TimeConductor()
-  tc.runSystem()
+  tc.runActuator()
