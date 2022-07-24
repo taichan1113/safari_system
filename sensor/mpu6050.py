@@ -261,7 +261,7 @@ class mpu6050:
         return [accel, gyro, temp]
 
 if __name__ == "__main__":
-    mpu = mpu6050(0x57, bus=1)
+    mpu = mpu6050(0x68)
     while True:
 #     print(mpu.get_accel_data()['x'])
 #     print(mpu.get_temp())
