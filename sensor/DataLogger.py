@@ -1,17 +1,24 @@
+import time
 import csv
 from sensor.mpu6050 import mpu6050
 
 class DataLogger:
   def __init__(self):
     self.sensor = mpu6050(0x69)
+    self.sampling_time = 0.1
+    self.now = None
 
   def log(self):
     try:
       with open('test.csv', 'a', newline='') as f:
         writer = csv.writer(f)
         writer.writerow(["acc_x", "acc_y", "acc_z", "gyro_x", "gyro_y", "gyro_z"])
-        print('file created')
+        print('file opened')
+        self.now = time.time()
         while True:
+          if time.time() - self.now < self.sampling_time:
+            continue
+          self.now = time.time()
           accel_data = self.sensor.get_accel_data()
           gyro_data = self.sensor.get_gyro_data()
           data = [accel_data['x'], accel_data['y'], accel_data['z'], gyro_data['x'], gyro_data['y'], gyro_data['z'],]
