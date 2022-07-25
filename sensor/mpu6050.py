@@ -9,6 +9,7 @@ https://github.com/m-rtijn/mpu6050
 """
 
 import smbus
+import time
 
 class mpu6050:
 
@@ -275,5 +276,5 @@ if __name__ == "__main__":
 #     print(gyro_data['z'])
         print("【加速度】 x:" + "%6.3f" % accel_data['x'] + " y:" + "%6.3f" % accel_data['y'] + " z:" + "%6.3f" % accel_data['z'])
 #         print("【角速度】 x:" + "%6.3f" % gyro_data['x'] + " y:" + "%6.3f" % gyro_data['y'] + " z:" + "%6.3f" % gyro_data['z'])
-
+        time.sleep(0.1)
 
