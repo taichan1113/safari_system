@@ -13,6 +13,11 @@ dl = DataLogger()
 
 # thread_system.start()
 # thread_logger.start()
-# tc.runActuator()
 
-dl.log()
+
+tc.runActuator()
+print('finish safely')
+
+
+# dl.log()
+
