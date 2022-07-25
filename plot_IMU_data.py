@@ -12,3 +12,4 @@ for i in range(6):
   axs[i,0].set_title(ax_names[i])
   # axs[i,0].set_ylim([-ax_limits[i],ax_limits[i]])
   axs[i,0].plot(df[df.columns[i]])
+fig.show()
