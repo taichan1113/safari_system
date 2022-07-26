@@ -1,7 +1,14 @@
 import pandas
 import matplotlib.pyplot as plt
+from tkinter import filedialog
 
-df = pandas.read_csv('20220726-185717.csv')
+path = filedialog.askopenfilename(
+    title = "open csv file",
+    filetypes = [("csv file", ".csv")],
+    initialdir = "./"
+)
+
+df = pandas.read_csv(path)
 
 fig, axs = plt.subplots(2, 3, tight_layout=True)
 axs = axs.reshape([6,1])
