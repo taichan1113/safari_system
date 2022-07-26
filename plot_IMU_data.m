@@ -1,0 +1,3 @@
+
+data = csvread('test.csv');
+
