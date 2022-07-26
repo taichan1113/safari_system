@@ -12,7 +12,7 @@ class DataLogger(threading.Thread):
     self.sampling_time = 0.1
     self.now = None
 
-  def run(self):
+  def log(self):
       date = datetime.datetime.now().strftime("%Y%m%d-%H%M%S")
       with open(date+'.csv', 'a', newline='') as f:
         writer = csv.writer(f)
