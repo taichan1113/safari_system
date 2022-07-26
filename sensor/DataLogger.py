@@ -13,7 +13,7 @@ class DataLogger:
     try:
       date = datetime.datetime.now().strftime("%Y%m%d-%H%M%S")
 
-      with open('{date}.csv', 'a', newline='') as f:
+      with open(date+'.csv', 'a', newline='') as f:
         writer = csv.writer(f)
         writer.writerow(["time", "acc_x", "acc_y", "acc_z", "gyro_x", "gyro_y", "gyro_z"])
         print('file opened')
