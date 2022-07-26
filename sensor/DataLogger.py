@@ -23,12 +23,14 @@ class DataLogger():
           continue
         t += time.time() - self.now
         self.now = time.time()
-      
-        accel_data = self.sensor.get_accel_data()
-        gyro_data = self.sensor.get_gyro_data()
-        data = [t, accel_data['x'], accel_data['y'], accel_data['z'], gyro_data['x'], gyro_data['y'], gyro_data['z'],]
-        writer.writerow(data)
-      
+        try:
+          accel_data = self.sensor.get_accel_data()
+          gyro_data = self.sensor.get_gyro_data()
+          data = [t, accel_data['x'], accel_data['y'], accel_data['z'], gyro_data['x'], gyro_data['y'], gyro_data['z'],]
+          writer.writerow(data)
+        except:
+          print('logging error')
+
       print('logging finished')
 
 if __name__ == "__main__":
