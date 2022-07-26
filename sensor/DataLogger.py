@@ -15,7 +15,7 @@ class DataLogger():
     with open(date+'.csv', 'a', newline='') as f:
       writer = csv.writer(f)
       writer.writerow(["time", "acc_x", "acc_y", "acc_z", "gyro_x", "gyro_y", "gyro_z"])
-      print('file opened')
+      print('logging started')
       self.now = time.time()
       t = 0
       while self.isLogging:
@@ -28,6 +28,8 @@ class DataLogger():
         gyro_data = self.sensor.get_gyro_data()
         data = [t, accel_data['x'], accel_data['y'], accel_data['z'], gyro_data['x'], gyro_data['y'], gyro_data['z'],]
         writer.writerow(data)
+      
+      print('logging finished')
 
 if __name__ == "__main__":
     logger = DataLogger()
