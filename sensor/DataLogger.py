@@ -22,13 +22,16 @@ class DataLogger:
         while True:
           if time.time() - self.now < self.sampling_time:
             continue
+          t += time.time() - self.now
+          self.now = time.time()
+        
           accel_data = self.sensor.get_accel_data()
           gyro_data = self.sensor.get_gyro_data()
           data = [t, accel_data['x'], accel_data['y'], accel_data['z'], gyro_data['x'], gyro_data['y'], gyro_data['z'],]
           writer.writerow(data)
           
-          t += time.time() - self.now
-          self.now = time.time()
+#           t += time.time() - self.now
+#           self.now = time.time()
     except KeyboardInterrupt:
       print('file created')
 
