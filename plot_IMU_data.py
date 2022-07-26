@@ -1,6 +1,9 @@
 import pandas
 import matplotlib.pyplot as plt
+import tkinter as tk
 from tkinter import filedialog
+
+root = tk.Tk()
 
 path = filedialog.askopenfilename(
     title = "open csv file",
@@ -9,6 +12,8 @@ path = filedialog.askopenfilename(
 )
 
 df = pandas.read_csv(path)
+
+root.withdraw()
 
 fig, axs = plt.subplots(2, 3, tight_layout=True)
 axs = axs.reshape([6,1])
