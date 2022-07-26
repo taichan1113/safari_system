@@ -1,7 +1,7 @@
 import pandas
 import matplotlib.pyplot as plt
 
-df = pandas.read_csv('test.csv')
+df = pandas.read_csv('test2.csv')
 
 fig, axs = plt.subplots(2, 3, tight_layout=True)
 axs = axs.reshape([6,1])
@@ -12,4 +12,3 @@ for i in range(6):
   axs[i,0].set_title(ax_names[i])
   # axs[i,0].set_ylim([-ax_limits[i],ax_limits[i]])
   axs[i,0].plot(df.time, df[df.columns[i+1]])
-fig.show()

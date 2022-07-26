@@ -1,4 +1,5 @@
 import time
+import datetime
 import csv
 from sensor.mpu6050 import mpu6050
 
@@ -10,7 +11,9 @@ class DataLogger:
 
   def log(self):
     try:
-      with open('test.csv', 'a', newline='') as f:
+      date = datetime.datetime.now().strftime("%Y%m%d-%H%M%S")
+
+      with open('{date}.csv', 'a', newline='') as f:
         writer = csv.writer(f)
         writer.writerow(["time", "acc_x", "acc_y", "acc_z", "gyro_x", "gyro_y", "gyro_z"])
         print('file opened')

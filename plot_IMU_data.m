@@ -1,3 +1,3 @@
 
-data = csvread('test.csv');
+data = csvread('test2.csv');
 
