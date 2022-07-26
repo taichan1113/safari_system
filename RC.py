@@ -4,11 +4,14 @@ from models.TimeConductor import TimeConductor
 from sensor.DataLogger import DataLogger
 
 tc = TimeConductor()
-dl = DataLogger()
+# dl = DataLogger()
 
-#thread_system = threading.Thread(target=tc.runActuator)
-thread_logger = threading.Thread(target=dl.log)
-thread_logger.daemon = True
+
+# thread_logger = threading.Thread(target=dl.log)
+# thread_logger.daemon = True
+# thread_logger.start()
+
+thread_logger = DataLogger()
 thread_logger.start()
 
 tc.runActuator()

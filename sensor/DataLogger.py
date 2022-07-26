@@ -2,17 +2,18 @@ import time
 import datetime
 import csv
 from sensor.mpu6050 import mpu6050
+import threading
 
-class DataLogger:
+class DataLogger(threading.Thread):
   def __init__(self):
+    super(DataLogger, self).__init__()
+    self.daemon = True
     self.sensor = mpu6050(0x69)
     self.sampling_time = 0.1
     self.now = None
 
-  def log(self):
-    try:
+  def run(self):
       date = datetime.datetime.now().strftime("%Y%m%d-%H%M%S")
-
       with open(date+'.csv', 'a', newline='') as f:
         writer = csv.writer(f)
         writer.writerow(["time", "acc_x", "acc_y", "acc_z", "gyro_x", "gyro_y", "gyro_z"])
@@ -29,11 +30,6 @@ class DataLogger:
           gyro_data = self.sensor.get_gyro_data()
           data = [t, accel_data['x'], accel_data['y'], accel_data['z'], gyro_data['x'], gyro_data['y'], gyro_data['z'],]
           writer.writerow(data)
-          
-#           t += time.time() - self.now
-#           self.now = time.time()
-    except KeyboardInterrupt:
-      print('file created')
 
 if __name__ == "__main__":
     logger = DataLogger()
