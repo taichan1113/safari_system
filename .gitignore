@@ -4,4 +4,4 @@ trial
 
 *.sh
 test
-.csv
+*.csv
