@@ -2,6 +2,11 @@ import pygame
 from pygame.locals import *
 from communication.UDP_transmit import udptrans as Trans
 import time
+from dotenv import load_dotenv
+import os
+
+load_dotenv('./.env')
+IP = os.getenv('MY_RASPIZERO2_IP')
 
 class UI:
   def __init__(self, type='handle controller'):
@@ -13,7 +18,7 @@ class UI:
     print(f'ボタン数: {self.joystick.get_numbuttons()}')
     print(f'ジョイスティック軸数: {self.joystick.get_numaxes()}')
     # 通信手段
-    self.trans = Trans()
+    self.trans = Trans(IP)
     # 時間制御
     self.rap_time = 0.1
     self.now = time.time()

@@ -3,19 +3,13 @@ from contextlib import closing
 import numpy as np
 import cv2
 import time
-from dotenv import load_dotenv
-import os
 import struct
-
-load_dotenv('./.env')
-KB_RASPI_IP = os.getenv('KB_RASPI_IP')
 
 ## UDP送信クラスUDP_transmit.py
 class udptrans():
-  def __init__(self):
+  def __init__(self, IP):
     # DstIP = "127.0.0.1" # test IP localhost
-    # DstIP = KB_RASPI_IP
-    DstIP = "192.168.11.25"
+    DstIP = IP
     DstPort = 22222
     self.DstAddr = (DstIP, DstPort)
 
