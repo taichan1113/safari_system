@@ -4,9 +4,9 @@ import csv
 from sensor.mpu6050 import mpu6050
 
 class DataLogger():
-  def __init__(self):
+  def __init__(self, sampling_time=0.05):
     self.sensor = mpu6050(0x69)
-    self.sampling_time = 0.1
+    self.sampling_time = sampling_time
     self.now = None
     self.isLogging = False
 
