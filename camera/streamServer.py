@@ -6,11 +6,8 @@ import cv2
 import socket
 import sys
 import numpy
-# from dotenv import load_dotenv
-# import os
 
-# load_dotenv('./.env')
-# IP = os.getenv('MY_RASPIZERO2_IP')
+IP = "192.168.11.16"
 
 class TCPHandler(socketserver.BaseRequestHandler):
     videoCap = ''
@@ -26,7 +23,7 @@ class TCPHandler(socketserver.BaseRequestHandler):
         ret, frame = videoCap.read()
 
         # jpegの圧縮率を設定 0～100値が高いほど高品質。何も指定しなければ95
-        encode_param = [int(cv2.IMWRITE_JPEG_QUALITY), 95]
+        encode_param = [int(cv2.IMWRITE_JPEG_QUALITY), 30]
 
         # 文字列に変換
         jpegsByte = cv2.imencode('.jpeg', frame, encode_param)[1].tobytes()
@@ -35,8 +32,8 @@ class TCPHandler(socketserver.BaseRequestHandler):
 
 
 # このプログラムを起動している端末のIPアドレス
-HOST = "127.0.0.1"
-# HOST = IP
+#HOST = "127.0.0.1"
+HOST = IP
 PORT = 8080
 
 # ビデオの設定
