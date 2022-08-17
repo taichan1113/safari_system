@@ -48,17 +48,21 @@ if __name__ == '__main__':
   udp = udptrans("192.168.11.11")
   with closing(udp.udpClntSock):
     capture = cv2.VideoCapture(0)
-    # capture.set(cv2.CAP_PROP_FRAME_WIDTH, 1920)
-    # capture.set(cv2.CAP_PROP_FRAME_HEIGHT, 1080)
+    capture.set(cv2.CAP_PROP_FRAME_WIDTH, 1920*0.5)
+    capture.set(cv2.CAP_PROP_FRAME_HEIGHT, 1080*0.5)
     capture.set(cv2.CAP_PROP_FOURCC, cv2.VideoWriter_fourcc('H', '2', '6', '4'))
+    t0 = time.time()
     try:
       while True:
+        if time.time() - t0 < 0.01:
+          continue
         ret, frame = capture.read()
-        encode_param = [int(cv2.IMWRITE_JPEG_QUALITY), 25]
+        encode_param = [int(cv2.IMWRITE_JPEG_QUALITY), 20]
         encoded_image = cv2.imencode('.jpeg', frame, encode_param)[1]
         data_encode = np.array(encoded_image)
         # print(len(data_encode))
         data = data_encode.tobytes()
         udp.transmit_img(data)
+        t0 = time.time()
     except KeyboardInterrupt:
       udp.udpClntSock.close()
