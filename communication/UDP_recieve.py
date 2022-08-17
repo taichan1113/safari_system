@@ -31,7 +31,7 @@ class udprecv():
     return struct.unpack('>ddd' , data)
 
   def receive_img(self):
-    img_buffer = 30000
+    img_buffer = 300000
     data, addr = self.udpServSock.recvfrom(img_buffer)
     np_arr = np.fromstring(data, np.uint8)
     # print(np_arr)
@@ -56,7 +56,7 @@ if __name__ == '__main__':
     try:
       data = udp.receive_img()
       cv2.imshow('result', data)
-      cv2.waitKey(1)
+      cv2.waitKey(int(30))
       # cv2.destroyAllWindows()
       
     except Exception as e:
