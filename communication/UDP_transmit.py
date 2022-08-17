@@ -8,7 +8,6 @@ import struct
 ## UDP送信クラスUDP_transmit.py
 class udptrans():
   def __init__(self, IP):
-    # DstIP = "127.0.0.1" # test IP localhost
     DstIP = IP
     DstPort = 22222
     self.DstAddr = (DstIP, DstPort)
@@ -46,19 +45,18 @@ def trans_digits_test():
         break
 
 if __name__ == '__main__':
-  udp = udptrans()
+  udp = udptrans("127.0.0.1")
   with closing(udp.udpClntSock):
     capture = cv2.VideoCapture(0)
     capture.set(cv2.CAP_PROP_FOURCC, cv2.VideoWriter_fourcc('H', '2', '6', '4'))
-    while True:
-      try:
+    try:
+      while True:
         ret, frame = capture.read()
-        encode_param = [int(cv2.IMWRITE_JPEG_QUALITY), 90]
+        encode_param = [int(cv2.IMWRITE_JPEG_QUALITY), 25]
         encoded_image = cv2.imencode('.jpeg', frame, encode_param)[1]
         data_encode = np.array(encoded_image)
+        print(len(data_encode))
         data = data_encode.tobytes()
         udp.transmit_img(data)
-      except KeyboardInterrupt:
-        udp.udpClntSock.close()
-        break
-
+    except KeyboardInterrupt:
+      udp.udpClntSock.close()
