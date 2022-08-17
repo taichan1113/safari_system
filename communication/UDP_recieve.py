@@ -34,7 +34,7 @@ class udprecv():
     img_buffer = 30000
     data, addr = self.udpServSock.recvfrom(img_buffer)
     np_arr = np.fromstring(data, np.uint8)
-    print(np_arr)
+    # print(np_arr)
 
     img_decode = cv2.imdecode(np_arr, cv2.IMREAD_COLOR)
     return img_decode
