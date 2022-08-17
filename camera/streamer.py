@@ -6,8 +6,8 @@ import cv2
 from dotenv import load_dotenv
 import os
 
-# load_dotenv('./.env')
-# IP = os.getenv('MY_RASPIZERO2_IP')
+load_dotenv('./.env')
+IP = os.getenv('MY_RASPIZERO2_IP')
 def getimage():
 
     # 送信先のIPアドレスとポート番号を設定

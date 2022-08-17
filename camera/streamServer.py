@@ -32,8 +32,8 @@ class TCPHandler(socketserver.BaseRequestHandler):
 
 
 # このプログラムを起動している端末のIPアドレス
-#HOST = "127.0.0.1"
-HOST = IP
+HOST = "127.0.0.1"
+# HOST = IP
 PORT = 8080
 
 # ビデオの設定
