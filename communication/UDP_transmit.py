@@ -45,7 +45,7 @@ def trans_digits_test():
         break
 
 if __name__ == '__main__':
-  udp = udptrans("127.0.0.1")
+  udp = udptrans("192.168.11.11")
   with closing(udp.udpClntSock):
     capture = cv2.VideoCapture(0)
     capture.set(cv2.CAP_PROP_FOURCC, cv2.VideoWriter_fourcc('H', '2', '6', '4'))
