@@ -7,13 +7,12 @@ from dotenv import load_dotenv
 import os
 
 # load_dotenv('./.env')
-# KB_RASPI_IP = os.getenv('KB_RASPI_IP')
+# IP = os.getenv('MY_RASPIZERO2_IP')
 def getimage():
 
     # 送信先のIPアドレスとポート番号を設定
     HOST = "127.0.0.1"
-    # HOST = KB_RASPI_IP
-    # HOST = "192.168.11.25"
+    # HOST = IP
     PORT = 8080
     sock=socket.socket(socket.AF_INET,socket.SOCK_STREAM)  
     sock.connect((HOST,PORT))   

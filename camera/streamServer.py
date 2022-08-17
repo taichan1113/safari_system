@@ -10,9 +10,7 @@ import numpy
 # import os
 
 # load_dotenv('./.env')
-# KB_RASPI_IP = os.getenv('KB_RASPI_IP')
-# KB_RASPI_IP = "192.168.11.23"
-
+# IP = os.getenv('MY_RASPIZERO2_IP')
 
 class TCPHandler(socketserver.BaseRequestHandler):
     videoCap = ''
@@ -37,8 +35,8 @@ class TCPHandler(socketserver.BaseRequestHandler):
 
 
 # このプログラムを起動している端末のIPアドレス
-#HOST = "127.0.0.1"
-HOST = "192.168.11.25"
+HOST = "127.0.0.1"
+# HOST = IP
 PORT = 8080
 
 # ビデオの設定
