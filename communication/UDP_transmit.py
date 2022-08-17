@@ -48,13 +48,13 @@ if __name__ == '__main__':
   udp = udptrans("192.168.11.11")
   with closing(udp.udpClntSock):
     capture = cv2.VideoCapture(0)
-    capture.set(cv2.CAP_PROP_FRAME_WIDTH, 1920*0.5)
-    capture.set(cv2.CAP_PROP_FRAME_HEIGHT, 1080*0.5)
+    capture.set(cv2.CAP_PROP_FRAME_WIDTH, 1920*0.6)
+    capture.set(cv2.CAP_PROP_FRAME_HEIGHT, 1080*0.6)
     capture.set(cv2.CAP_PROP_FOURCC, cv2.VideoWriter_fourcc('H', '2', '6', '4'))
     t0 = time.time()
     try:
       while True:
-        if time.time() - t0 < 0.01:
+        if time.time() - t0 < 0.03:
           continue
         ret, frame = capture.read()
         encode_param = [int(cv2.IMWRITE_JPEG_QUALITY), 20]
