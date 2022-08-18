@@ -57,6 +57,7 @@ class UI:
 
   def run(self):
     self.now = time.time()
+    self.isRunning = True
     while self.isRunning:
       try:
         for e in pygame.event.get():
