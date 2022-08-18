@@ -31,16 +31,15 @@ class RC:
     th_stopListner.start()
     th_actuator.start()
     th_sensor.start()
-    while True:
-      try:
+    try:
+      while True:
         continue
-      except KeyboardInterrupt:
-        break
-    event.set()
-    th_stopListner.join()
-    th_actuator.join()
-    th_sensor.join()
-    print('finish safely')
+    except KeyboardInterrupt:
+      event.set()
+      th_stopListner.join()
+      th_actuator.join()
+      th_sensor.join()
+      print('finish safely')
 
   def stopListening(self, event):
     event.wait()
