@@ -24,22 +24,20 @@ class RC:
     event = threading.Event()
     th_actuator = threading.Thread(target=self.tc.timeKeeper, args=(self.runActuatorOnce, self.stopActuator, ))
     th_sensor = threading.Thread(target=self.tc.timeKeeper, args=(self.transmitSensorOnce, self.closeSensor, ))
-    th_stopListner = threading.Thread(target=self.stopListening, args=(event, ))
+    th_actuator.daemon = True
+    th_sensor.daemon = True
+    # th_stopListner = threading.Thread(target=self.stopListening, args=(event, ))
 
     self.tc.isConducting = True
-
-    th_stopListner.start()
+    # th_stopListner.start()
     th_actuator.start()
     th_sensor.start()
     try:
       while True:
         pass
     except KeyboardInterrupt:        
-      event.set()
-      print(self.tc.isConducting)
-      #th_actuator.join()
-      #th_sensor.join()
-      #th_stopListner.join()
+      # event.set()
+      self.tc.isConducting = False
       print('finish safely')
 
   def stopListening(self, event):
