@@ -5,7 +5,7 @@ import cv2
 import time
 from dotenv import load_dotenv
 import os
-import threading
+# import threading
 
 load_dotenv('./.env')
 IP = os.getenv('MY_RASPIZERO2_IP')
@@ -50,19 +50,10 @@ class UI:
     if e.type == pygame.locals.JOYAXISMOTION:
       self.trans.transmit_digits(self.getSignal())
 
-  def recieveAndShowCaptures(self):
-    print('start camera')
-    while self.isRunning:
-      try:
-        img = self.recv.receive_img()
-        cv2.imshow('result', img)
-        cv2.waitKey(int(self.rap_time*1000)) # sec to msec
-      except KeyboardInterrupt:
-        self.isRunning = False
-        cv2.destroyAllWindows()
-        self.recv.udpServSock.close()
-        print('stop camera')
-        break
+  def showCapture(self):
+    img = self.recv.receive_img()
+    cv2.imshow('result', img)
+    cv2.waitKey(int(self.rap_time*1000)) # sec to msec
 
   def run(self):
     self.now = time.time()
@@ -75,23 +66,20 @@ class UI:
           if time.time() - self.now < self.rap_time:
             continue
           self.transmitSignal(e)
-          # self.recieveCaptures()
+          self.showCapture()
 
           # update time
           self.now = time.time()
 
       except KeyboardInterrupt:
         self.isRunning = False
+        cv2.destroyAllWindows()
+        self.recv.udpServSock.close()
+        self.trans.udpClntSock.close()
         print('stop run')
         break
     
 if __name__ == "__main__":
   ui = UI(type='joystick controller')
-  ui.isRunning = True
-
-  thread_command = threading.Thread(target=ui.run)
-  thread_command.daemon = True
-  thread_command.start()
-
-  ui.recieveAndShowCaptures()
+  ui.run()
   print('finish safely')
