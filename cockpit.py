@@ -89,9 +89,9 @@ if __name__ == "__main__":
   ui = UI(type='joystick controller')
   ui.isRunning = True
 
-  # thread_command = threading.Thread(target=ui.run)
-  # thread_command.daemon = True
-  # thread_command.start()
+  thread_command = threading.Thread(target=ui.run)
+  thread_command.daemon = True
+  thread_command.start()
 
   ui.recieveAndShowCaptures()
   print('finish safely')
