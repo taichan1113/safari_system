@@ -3,56 +3,73 @@ from communication import UDP_recieve, UDP_transmit
 from models.Driving import Driving
 from models.Steering import Steering
 from sensor.Camera import Camera
+import threading
 
 class TimeConductor:
   def __init__(self):
     IP = "192.168.11.11"
     # IP = "127.0.0.1"
     self.sampling_time = 0.05
-    self.reciever = UDP_recieve.udprecv()
-    self.transmitter = UDP_transmit.udptrans(IP)
     self.now = None
     self.isConducting = False
 
-  def conduct(self):
-    FPS = 1/self.sampling_time
+    self.reciever = UDP_recieve.udprecv()
+    self.transmitter = UDP_transmit.udptrans(IP)
     self.driving = Driving()
     self.steering = Steering()
-    self.camera = Camera(FPS)
+    self.camera = Camera(1/self.sampling_time)
 
-    self.now = time.time()
+  def conduct(self):
+    event = threading.Event()
+    th_actuator = threading.Thread(target=self.timeKeeper, args=(self.runActuatorOnce, self.stopActuator, ))
+    th_sensor = threading.Thread(target=self.timeKeeper, args=(self.transmitSensorOnce, self.closeSensor, ))
+    th_stopListner = threading.Thread(target=self.stopListening, args=(event, ))
+
     self.isConducting = True
 
-    print('start conduct')
+    th_stopListner.start()
+    th_actuator.start()
+    th_sensor.start()
+    while True:
+      try:
+        continue
+      except KeyboardInterrupt:
+        break
+    event.set()
 
-    try:
-      while self.isConducting:
-        if time.time() - self.now < self.sampling_time:
-          continue
-        self.now = time.time()
-        # receive and run actuator
-        data = self.reciever.receive_digits() # 0:steering, 1:accel, 2:break
-        self.runActuator(data)
-        # get sensor and transmit
-        frame = self.camera.capture()
-        self.transmitSensor(frame)
+  def timeKeeper(self, executeHandler, stopHandler):
+    print('start time keep')
+    while self.isConducting:
+      if time.time() - self.now < self.sampling_time:
+        continue
+      self.now = time.time()
+      executeHandler()
 
-    except KeyboardInterrupt:
-      self.driving.stop()
-      self.steering.stop()
-      self.camera.close()
-      self.reciever.udpServSock.close()
-      self.transmitter.udpClntSock.close()
-      self.isConducting = False
-      print('finish conduct')
+    stopHandler()
+    print('finish time keep')
 
-  def runActuator(self, data):
+  def stopListening(self, event):
+    event.wait()
+    self.isConducting = False
+
+  def runActuatorOnce(self):
+    data = self.reciever.receive_digits() # 0:steering, 1:accel, 2:break
     self.driving.actuate([data[1], data[2]])
     self.steering.actuate(data[0])
 
-  def transmitSensor(self, frame):
+  def stopActuator(self):
+    self.driving.stop()
+    self.steering.stop()
+    self.reciever.udpServSock.close()
+
+  def transmitSensorOnce(self):
+    frame = self.camera.capture()
     self.transmitter.transmit_img(frame, 20)
+
+  def closeSensor(self):
+    self.camera.close()
+    self.transmitter.udpClntSock.close()
 
 if __name__ == '__main__':
   tc = TimeConductor()
-  tc.runActuator()
+  # tc.runActuatorOnce()
