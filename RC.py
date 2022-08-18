@@ -26,7 +26,7 @@ class RC:
     th_sensor = threading.Thread(target=self.tc.timeKeeper, args=(self.transmitSensorOnce, self.closeSensor, ))
     th_stopListner = threading.Thread(target=self.stopListening, args=(event, ))
 
-    self.isConducting = True
+    self.tc.isConducting = True
 
     th_stopListner.start()
     th_actuator.start()
@@ -44,7 +44,7 @@ class RC:
 
   def stopListening(self, event):
     event.wait()
-    self.isConducting = False
+    self.tc.isConducting = False
 
   def runActuatorOnce(self):
     data = self.reciever.receive_digits() # 0:steering, 1:accel, 2:break
