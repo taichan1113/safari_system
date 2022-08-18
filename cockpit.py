@@ -1,18 +1,16 @@
+import os
+import time
+import cv2
 import pygame
 from pygame.locals import *
-from communication import UDP_recieve, UDP_transmit
-import cv2
-import time
 from dotenv import load_dotenv
-import os
-# import threading
+from communication import UDP_recieve, UDP_transmit
 
 load_dotenv('./.env')
 IP = os.getenv('MY_RASPIZERO2_IP')
 
 class UI:
   def __init__(self, type='handle controller'):
-    self.isRunning = False
     # pygame初期化
     pygame.init()
     self.joystick = pygame.joystick.Joystick(0)
@@ -47,12 +45,12 @@ class UI:
       print(f'ボタン{e.button}を離した')
 
   def transmitSignal(self):
-    # if e.type == pygame.locals.JOYAXISMOTION:
     self.trans.transmit_digits(self.getSignal())
 
   def showCapture(self):
     try:
       img = self.recv.receive_img()
+      # print(img)
       cv2.imshow('result', img)
       cv2.waitKey(int(self.rap_time*1000)) # sec to msec
     except:
@@ -60,8 +58,7 @@ class UI:
 
   def run(self):
     self.now = time.time()
-    self.isRunning = True
-    while self.isRunning:
+    while True:
       try:
         if time.time() - self.now < self.rap_time:
           continue
@@ -70,20 +67,7 @@ class UI:
         self.showCapture()
         self.now = time.time()
 
-        # for e in pygame.event.get():
-        #   if e.type == QUIT:
-        #     break
-        #   # self.printSignal(e)
-        #   if time.time() - self.now < self.rap_time:
-        #     continue
-        #   self.transmitSignal(e)
-        #   self.showCapture()
-
-        #   # update time
-        #   self.now = time.time()
-
       except KeyboardInterrupt:
-        self.isRunning = False
         cv2.destroyAllWindows()
         self.recv.udpServSock.close()
         self.trans.udpClntSock.close()
