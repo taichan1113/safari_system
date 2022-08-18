@@ -36,7 +36,7 @@ class UI:
     elif self.type == 'joystick controller':
       return [self.joystick.get_axis(0), -self.joystick.get_axis(5), -self.joystick.get_axis(4)]
     else:
-      return [0, 0]
+      return [0, 0, 0]
 
   def printSignal(self, e):
     if e.type == pygame.locals.JOYAXISMOTION:
@@ -46,31 +46,41 @@ class UI:
     elif e.type == pygame.locals.JOYBUTTONUP:
       print(f'ボタン{e.button}を離した')
 
-  def transmitSignal(self, e):
-    if e.type == pygame.locals.JOYAXISMOTION:
-      self.trans.transmit_digits(self.getSignal())
+  def transmitSignal(self):
+    # if e.type == pygame.locals.JOYAXISMOTION:
+    self.trans.transmit_digits(self.getSignal())
 
   def showCapture(self):
-    img = self.recv.receive_img()
-    cv2.imshow('result', img)
-    cv2.waitKey(int(self.rap_time*1000)) # sec to msec
+    try:
+      img = self.recv.receive_img()
+      cv2.imshow('result', img)
+      cv2.waitKey(int(self.rap_time*1000)) # sec to msec
+    except:
+      pass
 
   def run(self):
     self.now = time.time()
     self.isRunning = True
     while self.isRunning:
       try:
-        for e in pygame.event.get():
-          if e.type == QUIT:
-            break
-          # self.printSignal(e)
-          if time.time() - self.now < self.rap_time:
-            continue
-          self.transmitSignal(e)
-          self.showCapture()
+        if time.time() - self.now < self.rap_time:
+          continue
+        self.transmitSignal()
+        pygame.event.clear()
+        self.showCapture()
+        self.now = time.time()
 
-          # update time
-          self.now = time.time()
+        # for e in pygame.event.get():
+        #   if e.type == QUIT:
+        #     break
+        #   # self.printSignal(e)
+        #   if time.time() - self.now < self.rap_time:
+        #     continue
+        #   self.transmitSignal(e)
+        #   self.showCapture()
+
+        #   # update time
+        #   self.now = time.time()
 
       except KeyboardInterrupt:
         self.isRunning = False

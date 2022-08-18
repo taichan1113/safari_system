@@ -1,6 +1,5 @@
 import pygame
 from pygame.locals import *
-from communication.UDP_transmit import udptrans as Trans
 import time
 
 # pygame初期化
@@ -13,25 +12,28 @@ print(f'ジョイスティック軸数: {joystick.get_numaxes()}')
 
 
 pygame.init()
-trans = Trans()
 now = time.time()
-
+ts = 0.1
 while True:
   try:
-    for e in pygame.event.get():
-      if e.type == QUIT:
-        break
-      if time.time() - now < 0.1:
-        continue
-      
-      if e.type == pygame.locals.JOYAXISMOTION:
-        # print('ジョイスティック:', joystick.get_axis(0), joystick.get_axis(1), joystick.get_axis(2), joystick.get_axis(3))
-        trans.transmit_digits([joystick.get_axis(0), joystick.get_axis(1), joystick.get_axis(2)])
-      elif e.type == pygame.locals.JOYBUTTONDOWN:
-        print(f'ボタン{e.button}を押した')
-      elif e.type == pygame.locals.JOYBUTTONUP:
-        print(f'ボタン{e.button}を離した')
-      now = time.time()
+    if time.time() - now < ts:
+      continue
+    print('ジョイスティック:', [joystick.get_axis(0), -joystick.get_axis(5), -joystick.get_axis(4)])
+    pygame.event.clear()
+    now = time.time()
+    # events = pygame.event.get()
+    # for e in events:
+    #   if e.type == QUIT:
+    #     break
+    #   if time.time() - now < ts:
+    #     continue
+    #   if e.type == pygame.locals.JOYAXISMOTION:
+    #     print('ジョイスティック:', [joystick.get_axis(0), -joystick.get_axis(5), -joystick.get_axis(4)])
+    #   elif e.type == pygame.locals.JOYBUTTONDOWN:
+    #     print(f'ボタン{e.button}を押した')
+    #   elif e.type == pygame.locals.JOYBUTTONUP:
+    #     print(f'ボタン{e.button}を離した')
+    #   now = time.time()
 
   except KeyboardInterrupt:
     break
