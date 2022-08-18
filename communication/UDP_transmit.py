@@ -24,10 +24,11 @@ class udptrans():
     print("send: ", struct.unpack('>ddd', send_data)) #送信したデータを送信側に表示
     self.udpClntSock.sendto(send_data, self.DstAddr)
 
-  def transmit_img(self, encoded_image):
-    data_encode = np.array(encoded_image)
-    send_data = data_encode.tobytes()
-    self.udpClntSock.sendto(send_data, self.DstAddr)
+  def transmit_img(self, frame, quality):
+    encode_param = [int(cv2.IMWRITE_JPEG_QUALITY), quality]
+    encoded_image = cv2.imencode('.jpeg', frame, encode_param)[1]
+    print(encoded_image)
+    self.udpClntSock.sendto(encoded_image.tobytes(), self.DstAddr)
     # データを受信する:print(self.udpClntSock.recv(1024).decode('utf-8'))
 
 def trans_digits_test():
@@ -45,7 +46,9 @@ def trans_digits_test():
         break
 
 if __name__ == '__main__':
-  udp = udptrans("192.168.11.11")
+  # IP = "192.168.11.11"
+  IP = "127.0.0.1"
+  udp = udptrans(IP)
   with closing(udp.udpClntSock):
     capture = cv2.VideoCapture(0)
     capture.set(cv2.CAP_PROP_FRAME_WIDTH, 1920*0.6)
@@ -57,12 +60,8 @@ if __name__ == '__main__':
         if time.time() - t0 < 0.03:
           continue
         ret, frame = capture.read()
-        encode_param = [int(cv2.IMWRITE_JPEG_QUALITY), 20]
-        encoded_image = cv2.imencode('.jpeg', frame, encode_param)[1]
-        data_encode = np.array(encoded_image)
-        # print(len(data_encode))
-        data = data_encode.tobytes()
-        udp.transmit_img(data)
+        udp.transmit_img(frame, 20)
         t0 = time.time()
+        # time.sleep(1)
     except KeyboardInterrupt:
       udp.udpClntSock.close()
