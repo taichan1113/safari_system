@@ -1,9 +1,10 @@
 import pygame
 from pygame.locals import *
-from communication.UDP_transmit import udptrans as Trans
+from communication import UDP_recieve, UDP_transmit
 import time
 from dotenv import load_dotenv
 import os
+import cv2
 
 load_dotenv('./.env')
 IP = os.getenv('MY_RASPIZERO2_IP')
@@ -18,7 +19,8 @@ class UI:
     print(f'ボタン数: {self.joystick.get_numbuttons()}')
     print(f'ジョイスティック軸数: {self.joystick.get_numaxes()}')
     # 通信手段
-    self.trans = Trans(IP)
+    self.trans = UDP_transmit.udptrans(IP)
+    self.recv = UDP_recieve.udprecv()
     # 時間制御
     self.rap_time = 0.1
     self.now = time.time()
@@ -45,6 +47,11 @@ class UI:
   def transmitSignal(self, e):
     if e.type == pygame.locals.JOYAXISMOTION:
       self.trans.transmit_digits(self.getSignal())
+
+  def showCaptures(self):
+    data = self.recv.receive_img()
+    cv2.imshow('result', data)
+    cv2.waitKey(int(30))
 
   def run(self):
     while True:
