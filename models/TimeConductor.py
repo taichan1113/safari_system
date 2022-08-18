@@ -39,6 +39,7 @@ class TimeConductor:
 
   def timeKeeper(self, executeHandler, stopHandler):
     print('start time keep')
+    self.now = time.time()
     while self.isConducting:
       if time.time() - self.now < self.sampling_time:
         continue
