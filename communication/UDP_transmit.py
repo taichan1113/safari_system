@@ -27,7 +27,6 @@ class udptrans():
   def transmit_img(self, frame, quality):
     encode_param = [int(cv2.IMWRITE_JPEG_QUALITY), quality]
     encoded_image = cv2.imencode('.jpeg', frame, encode_param)[1]
-    print(encoded_image)
     self.udpClntSock.sendto(encoded_image.tobytes(), self.DstAddr)
     # データを受信する:print(self.udpClntSock.recv(1024).decode('utf-8'))
 
@@ -46,8 +45,8 @@ def trans_digits_test():
         break
 
 if __name__ == '__main__':
-  # IP = "192.168.11.11"
-  IP = "127.0.0.1"
+  IP = "192.168.11.11"
+  # IP = "127.0.0.1"
   udp = udptrans(IP)
   with closing(udp.udpClntSock):
     capture = cv2.VideoCapture(0)
