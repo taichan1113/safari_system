@@ -72,3 +72,7 @@ class RC:
 # thread_logger.daemon = True
 # thread_logger.start()
 # dl.isLogging = False
+
+if __name__ == '__main__':
+  rc = RC()
+  rc.conduct()
