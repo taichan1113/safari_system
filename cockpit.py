@@ -1,15 +1,18 @@
 import pygame
 from pygame.locals import *
-from communication.UDP_transmit import udptrans as Trans
+from communication import UDP_recieve, UDP_transmit
+import cv2
 import time
 from dotenv import load_dotenv
 import os
+import threading
 
 load_dotenv('./.env')
 IP = os.getenv('MY_RASPIZERO2_IP')
 
 class UI:
   def __init__(self, type='handle controller'):
+    self.isRunning = False
     # pygame初期化
     pygame.init()
     self.joystick = pygame.joystick.Joystick(0)
@@ -18,10 +21,11 @@ class UI:
     print(f'ボタン数: {self.joystick.get_numbuttons()}')
     print(f'ジョイスティック軸数: {self.joystick.get_numaxes()}')
     # 通信手段
-    self.trans = Trans(IP)
+    self.trans = UDP_transmit.udptrans(IP)
+    self.recv = UDP_recieve.udprecv()
     # 時間制御
-    self.rap_time = 0.1
-    self.now = time.time()
+    self.rap_time = 0.05
+    self.now = None
     # コントローラータイプ
     self.type = type
 
@@ -46,21 +50,48 @@ class UI:
     if e.type == pygame.locals.JOYAXISMOTION:
       self.trans.transmit_digits(self.getSignal())
 
+  def recieveAndShowCaptures(self):
+    print('start camera')
+    while self.isRunning:
+      try:
+        img = self.recv.receive_img()
+        cv2.imshow('result', img)
+        cv2.waitKey(int(self.rap_time*1000)) # sec to msec
+      except KeyboardInterrupt:
+        self.isRunning = False
+        cv2.destroyAllWindows()
+        self.recv.udpServSock.close()
+        print('stop camera')
+        break
+
   def run(self):
-    while True:
+    self.now = time.time()
+    while self.isRunning:
       try:
         for e in pygame.event.get():
           if e.type == QUIT:
             break
+          # self.printSignal(e)
           if time.time() - self.now < self.rap_time:
             continue
-          # self.printSignal(e)
           self.transmitSignal(e)
+          # self.recieveCaptures()
+
+          # update time
           self.now = time.time()
 
       except KeyboardInterrupt:
+        self.isRunning = False
+        print('stop run')
         break
-
+    
 if __name__ == "__main__":
   ui = UI(type='joystick controller')
-  ui.run()
+  ui.isRunning = True
+
+  # thread_command = threading.Thread(target=ui.run)
+  # thread_command.daemon = True
+  # thread_command.start()
+
+  ui.recieveAndShowCaptures()
+  print('finish safely')
