@@ -21,28 +21,25 @@ class RC:
     self.camera = Camera(1/sampling_time)
 
   def conduct(self):
-    event = threading.Event()
-    th_actuator = threading.Thread(target=self.tc.timeKeeper, args=(self.runActuatorOnce, self.stopActuator, ))
+    self.tc.isConducting = True
+    #event = threading.Event()
+    #th_actuator = threading.Thread(target=self.tc.timeKeeper, args=(self.runActuatorOnce, self.stopActuator, ))
     th_sensor = threading.Thread(target=self.tc.timeKeeper, args=(self.transmitSensorOnce, self.closeSensor, ))
-    th_actuator.daemon = True
+    #th_actuator.daemon = True
     th_sensor.daemon = True
     # th_stopListner = threading.Thread(target=self.stopListening, args=(event, ))
 
-    self.tc.isConducting = True
+    
     # th_stopListner.start()
-    th_actuator.start()
+    # th_actuator.start()
     th_sensor.start()
-    try:
-      while True:
-        pass
-    except KeyboardInterrupt:        
-      # event.set()
-      self.tc.isConducting = False
-      print('finish safely')
-
-  def stopListening(self, event):
-    event.wait()
+    self.tc.timeKeeper(self.runActuatorOnce, self.stopActuator)
     self.tc.isConducting = False
+    print('finish safely')
+
+#   def stopListening(self, event):
+#     event.wait()
+#     self.tc.isConducting = False
 
   def runActuatorOnce(self):
     data = self.reciever.receive_digits() # 0:steering, 1:accel, 2:break

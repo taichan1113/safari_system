@@ -9,14 +9,16 @@ class TimeConductor:
   def timeKeeper(self, executeHandler, stopHandler):
     print('start time keep')
     self.now = time.time()
-    while self.isConducting:
-      if time.time() - self.now < self.sampling_time:
-        continue
-      self.now = time.time()
-      executeHandler()
-
-    stopHandler()
-    print('finish time keep')
+    try:
+      while self.isConducting:
+        if time.time() - self.now < self.sampling_time:
+          continue
+        self.now = time.time()
+        executeHandler()
+    except KeyboardInterrupt:
+      stopHandler()
+#       self.isConducting = False
+      print('finish time keep')
 
 if __name__ == '__main__':
   tc = TimeConductor()
