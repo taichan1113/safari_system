@@ -36,9 +36,9 @@ class RC:
         continue
     except KeyboardInterrupt:
       event.set()
-      th_stopListner.join()
       th_actuator.join()
       th_sensor.join()
+      th_stopListner.join()
       print('finish safely')
 
   def stopListening(self, event):
