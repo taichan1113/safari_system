@@ -1,4 +1,4 @@
-import threading
+# import threading
 
 from models.TimeConductor import TimeConductor
 from sensor.DataLogger import DataLogger
@@ -11,6 +11,6 @@ tc = TimeConductor()
 # thread_logger.daemon = True
 # thread_logger.start()
 
-tc.runActuator()
+tc.conduct()
 # dl.isLogging = False
 print('finish safely')
