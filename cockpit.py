@@ -7,23 +7,18 @@ from dotenv import load_dotenv
 from communication import UDP_recieve, UDP_transmit
 
 load_dotenv('./.env')
-IP = os.getenv('MY_RASPIZERO2_IP')
 
 class UI:
   def __init__(self, type='handle controller'):
-    # pygame初期化
+    IP = os.getenv('MY_RASPIZERO2_IP')
+    self.type = type
+    self.sampling_time = 0.05
     pygame.init()
     self.joystick = pygame.joystick.Joystick(0)
     self.joystick.init()
     self.printJoystickInfo()
-    
-    # 通信手段
     self.trans = UDP_transmit.udptrans(IP)
     self.recv = UDP_recieve.udprecv(blocking=False)
-    # 時間制御
-    self.sampling_time = 0.05
-    # コントローラータイプ
-    self.type = type
 
   def printJoystickInfo(self):
     print(f'ジョイスティック名前: {self.joystick.get_name()}')
@@ -51,21 +46,27 @@ class UI:
     cv2.imshow('result', img)
     cv2.waitKey(int(self.sampling_time*1000)) # sec to msec
 
+  def running(self):
+    self.trans.transmit_digits(self.getSignal())
+    pygame.event.clear()
+    self.showCapture()
+
+  def close(self):
+    cv2.destroyAllWindows()
+    self.recv.socketClose()
+    self.trans.socketClose()
+    print('closed')
+
   def run(self):
     while True:
       try:
-        self.trans.transmit_digits(self.getSignal())
-        pygame.event.clear()
-        self.showCapture()
+        self.running()
         time.sleep(self.sampling_time)
 
       except KeyboardInterrupt:
-        cv2.destroyAllWindows()
-        self.recv.socketClose()
-        self.trans.socketClose()
-        print('stop run')
+        self.close()
         break
-    
+
 if __name__ == "__main__":
   ui = UI(type='joystick controller')
   ui.run()
