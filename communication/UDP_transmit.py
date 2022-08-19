@@ -1,11 +1,10 @@
 from socket import *
 from contextlib import closing
-# import numpy as np
 import cv2
 import time
 import struct
 
-## UDP送信クラスUDP_transmit.py
+## UDP送信クラス
 class udptrans():
   def __init__(self, IP):
     DstIP = IP

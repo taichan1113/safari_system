@@ -11,8 +11,6 @@ class TimeConductor:
     self.sampling_time = 0.05
     self.reciever = UDP_recieve.udprecv()
     self.transmitter = UDP_transmit.udptrans(IP)
-    self.now = None
-    self.isConducting = False
 
   def conduct(self):
     FPS = 1/self.sampling_time
@@ -20,20 +18,11 @@ class TimeConductor:
     self.steering = Steering()
     self.camera = Camera(FPS)
 
-    # self.now = time.time()
-    self.isConducting = True
-
     print('start conduct')
-
     try:
-      while self.isConducting:
-        # if time.time() - self.now < self.sampling_time:
-        #   continue
-        # self.now = time.time()
-        # receive and run actuator
+      while True:
         data = self.reciever.receive_digits() # 0:steering, 1:accel, 2:break
         self.runActuator(data)
-        # get sensor and transmit
         frame = self.camera.capture()
         self.transmitSensor(frame)
         time.sleep(self.sampling_time)
@@ -42,9 +31,8 @@ class TimeConductor:
       self.driving.stop()
       self.steering.stop()
       self.camera.close()
-      self.reciever.udpServSock.close()
-      self.transmitter.udpClntSock.close()
-      self.isConducting = False
+      self.reciever.socketClose()
+      self.transmitter.socketClose()
       print('finish conduct')
 
   def runActuator(self, data):
@@ -52,7 +40,7 @@ class TimeConductor:
     self.steering.actuate(data[0])
 
   def transmitSensor(self, frame):
-    self.transmitter.transmit_img(frame, 20)
+    self.transmitter.transmit_img(frame, quality=20)
 
 if __name__ == '__main__':
   tc = TimeConductor()
