@@ -13,7 +13,6 @@ class udprecv():
     self.BUFSIZE = 1024
     self.udpServSock = socket(AF_INET, SOCK_DGRAM)
     self.udpServSock.bind(self.SrcAddr)
-    self.udpServSock.setblocking(0)
 
   def receive(self):
     try:

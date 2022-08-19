@@ -21,6 +21,7 @@ class UI:
     # 通信手段
     self.trans = UDP_transmit.udptrans(IP)
     self.recv = UDP_recieve.udprecv()
+    self.recv.udpServSock.setblocking(0)
     # 時間制御
     self.rap_time = 0.05
     self.now = None
