@@ -5,7 +5,7 @@ import cv2
 
 ## UDP受信クラス
 class udprecv():
-  def __init__(self):
+  def __init__(self, blocking=True):
     SrcIP = ""
     SrcPort = 22222
     self.SrcAddr = (SrcIP, SrcPort)
@@ -13,6 +13,7 @@ class udprecv():
     self.BUFSIZE = 1024
     self.udpServSock = socket(AF_INET, SOCK_DGRAM)
     self.udpServSock.bind(self.SrcAddr)
+    self.udpServSock.setblocking = blocking
 
   def receive(self):
     try:
@@ -36,6 +37,9 @@ class udprecv():
     np_arr = np.fromstring(data, np.uint8)
     img_decode = cv2.imdecode(np_arr, cv2.IMREAD_COLOR)
     return img_decode
+
+  def socketClose(self):
+    self.udpServSock.close()
 
 def recieve_digits_test():
   udp = udprecv()

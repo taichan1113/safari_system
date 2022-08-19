@@ -30,6 +30,9 @@ class udptrans():
     self.udpClntSock.sendto(encoded_image.tobytes(), self.DstAddr)
     # データを受信する:print(self.udpClntSock.recv(1024).decode('utf-8'))
 
+  def socketClose(self):
+    self.udpClntSock.close()
+
 def trans_digits_test():
   udp = udptrans()
   with closing(udp.udpClntSock):
