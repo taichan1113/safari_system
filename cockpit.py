@@ -1,10 +1,10 @@
 import os
-import time
 import cv2
 import pygame
 from pygame.locals import *
 from dotenv import load_dotenv
 from communication import UDP_recieve, UDP_transmit
+from models.TimeConductor import TimeConductor
 
 load_dotenv('./.env')
 
@@ -12,7 +12,7 @@ class UI:
   def __init__(self, type='handle controller'):
     IP = os.getenv('MY_RASPIZERO2_IP')
     self.type = type
-    self.sampling_time = 0.05
+    self.tc = TimeConductor()
     pygame.init()
     self.joystick = pygame.joystick.Joystick(0)
     self.joystick.init()
@@ -58,14 +58,7 @@ class UI:
     print('closed')
 
   def run(self):
-    while True:
-      try:
-        self.running()
-        time.sleep(self.sampling_time)
-
-      except KeyboardInterrupt:
-        self.close()
-        break
+    self.tc.conduct(self.running, self.close)
 
 if __name__ == "__main__":
   ui = UI(type='joystick controller')

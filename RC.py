@@ -1,4 +1,4 @@
-import time
+from models.TimeConductor import TimeConductor
 from communication import UDP_recieve, UDP_transmit
 from models.Driving import Driving
 from models.Steering import Steering
@@ -8,13 +8,12 @@ class RC:
   def __init__(self):
     IP = "192.168.11.11"
     # IP = "127.0.0.1"
-    FPS = 1/self.sampling_time
-    self.sampling_time = 0.05
+    self.tc = TimeConductor()
     self.reciever = UDP_recieve.udprecv(blocking=True)
     self.transmitter = UDP_transmit.udptrans(IP)
     self.driving = Driving()
     self.steering = Steering()
-    self.camera = Camera(FPS)
+    self.camera = Camera(FPS=int(1/self.tc.sampling_time))
 
   def runActuator(self, data):
     self.driving.actuate([data[1], data[2]])
@@ -39,14 +38,7 @@ class RC:
 
   def serve(self):
     print('start serving')
-    while True:
-      try:
-        self.serving()
-        time.sleep(self.sampling_time)
-
-      except KeyboardInterrupt:
-        self.close()
-        break
+    self.tc.conduct(self.serving, self.close)
 
 if __name__ == '__main__':
   rc = RC()
