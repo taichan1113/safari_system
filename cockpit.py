@@ -60,12 +60,13 @@ class UI:
     self.now = time.time()
     while True:
       try:
-        if time.time() - self.now < self.rap_time:
-          continue
+        # if time.time() - self.now < self.rap_time:
+        #   continue
         self.transmitSignal()
         pygame.event.clear()
         self.showCapture()
-        self.now = time.time()
+        # self.now = time.time()
+        time.sleep(self.rap_time)
 
       except KeyboardInterrupt:
         cv2.destroyAllWindows()

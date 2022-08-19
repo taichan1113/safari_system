@@ -20,22 +20,23 @@ class TimeConductor:
     self.steering = Steering()
     self.camera = Camera(FPS)
 
-    self.now = time.time()
+    # self.now = time.time()
     self.isConducting = True
 
     print('start conduct')
 
     try:
       while self.isConducting:
-        if time.time() - self.now < self.sampling_time:
-          continue
-        self.now = time.time()
+        # if time.time() - self.now < self.sampling_time:
+        #   continue
+        # self.now = time.time()
         # receive and run actuator
         data = self.reciever.receive_digits() # 0:steering, 1:accel, 2:break
         self.runActuator(data)
         # get sensor and transmit
         frame = self.camera.capture()
         self.transmitSensor(frame)
+        time.sleep(self.sampling_time)
 
     except KeyboardInterrupt:
       self.driving.stop()

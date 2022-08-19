@@ -12,15 +12,16 @@ print(f'ジョイスティック軸数: {joystick.get_numaxes()}')
 
 
 pygame.init()
-now = time.time()
-ts = 0.1
+# now = time.time()
+ts = 0.2
 while True:
   try:
-    if time.time() - now < ts:
-      continue
+    # if time.time() - now < ts:
+    #   continue
     print('ジョイスティック:', [joystick.get_axis(0), -joystick.get_axis(5), -joystick.get_axis(4)])
     pygame.event.clear()
-    now = time.time()
+    # now = time.time()
+    time.sleep(ts)
     # events = pygame.event.get()
     # for e in events:
     #   if e.type == QUIT:
