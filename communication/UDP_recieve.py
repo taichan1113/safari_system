@@ -10,7 +10,7 @@ class udprecv():
     SrcPort = 22222
     self.SrcAddr = (SrcIP, SrcPort)
 
-    self.BUFSIZE = 1024
+    self.BUFSIZE = 2**10
     self.udpServSock = socket(AF_INET, SOCK_DGRAM)
     self.udpServSock.bind(self.SrcAddr)
     self.udpServSock.setblocking = blocking
@@ -32,7 +32,7 @@ class udprecv():
     return struct.unpack('>ddd' , data)
 
   def receive_img(self):
-    img_buffer = 300000
+    img_buffer = 2**19
     data, addr = self.udpServSock.recvfrom(img_buffer)
     np_arr = np.fromstring(data, np.uint8)
     img_decode = cv2.imdecode(np_arr, cv2.IMREAD_COLOR)
