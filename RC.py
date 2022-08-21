@@ -42,17 +42,7 @@ class RC:
 
   def serve(self):
     print('start serving')
-    # self.tc.conduct(self.serving, self.close)
-    while True:
-      try:
-        self.serving()
-        time.sleep(self.tc.sampling_time)
-
-      except KeyboardInterrupt:
-        self.close()
-        print('finish conduct')
-        break
-
+    self.tc.conduct(self.serving, self.close)
 
 if __name__ == '__main__':
   rc = RC()
