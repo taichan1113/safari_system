@@ -29,7 +29,9 @@ class udprecv():
 
   def receive_digits(self):
     data, addr = self.receive()
-    return struct.unpack('>ddd' , data)
+    digits = struct.unpack('>ddd' , data)
+    print(digits)
+    return digits
 
   def receive_img(self):
     img_buffer = 2**19
