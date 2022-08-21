@@ -9,7 +9,7 @@ class RC:
     IP = "192.168.11.11"
     # IP = "127.0.0.1"
     self.tc = TimeConductor()
-    self.reciever = UDP_recieve.udprecv(blocking=True)
+    self.reciever = UDP_recieve.udprecv(blocking=False)
     self.transmitter = UDP_transmit.udptrans(IP)
     self.driving = Driving()
     self.steering = Steering()
@@ -23,8 +23,11 @@ class RC:
     self.transmitter.transmit_img(frame, quality=20)
 
   def serving(self):
-    data = self.reciever.receive_digits() # 0:steering, 1:accel, 2:break
-    self.runActuator(data)
+    try:
+      data = self.reciever.receive_digits() # 0:steering, 1:accel, 2:break
+      self.runActuator(data)
+    except:
+      pass
     frame = self.camera.capture()
     self.transmitSensor(frame)
     
