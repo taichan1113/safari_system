@@ -42,9 +42,12 @@ class UI:
       print(f'ボタン{e.button}を離した')
 
   def showCapture(self):
-    img = self.recv.receive_img()
-    cv2.imshow('result', img)
-    cv2.waitKey(int(self.sampling_time*1000)) # sec to msec
+    try:
+      img = self.recv.receive_img()
+      cv2.imshow('result', img)
+      cv2.waitKey(int(self.sampling_time*1000)) # sec to msec
+    except:
+      pass
 
   def running(self):
     self.trans.transmit_digits(self.getSignal())
