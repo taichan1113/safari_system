@@ -24,11 +24,8 @@ class RC:
     self.transmitter.transmit_img(frame, quality=20)
 
   def serving(self):
-    try:
-      data = self.reciever.receive_digits() # 0:steering, 1:accel, 2:break
-      self.runActuator(data)
-    except:
-      pass
+    data = self.reciever.receive_digits() # 0:steering, 1:accel, 2:break
+    self.runActuator(data)
     frame = self.camera.capture()
     self.transmitSensor(frame)
     

@@ -50,9 +50,9 @@ class UI:
       pass
 
   def running(self):
-    pygame.event.clear()
     self.trans.transmit_digits(self.getSignal())
-    # self.showCapture()
+    pygame.event.clear()
+    self.showCapture()
 
   def close(self):
     cv2.destroyAllWindows()
