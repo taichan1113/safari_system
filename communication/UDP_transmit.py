@@ -33,7 +33,8 @@ class udptrans():
     self.udpClntSock.close()
 
 def trans_digits_test():
-  udp = udptrans()
+  IP = "192.168.11.11"
+  udp = udptrans(IP)
   with closing(udp.udpClntSock):
     data_el = 0
     while True:
@@ -46,7 +47,7 @@ def trans_digits_test():
         udp.udpClntSock.close()
         break
 
-if __name__ == '__main__':
+def trans_img_test():
   IP = "192.168.11.11"
   # IP = "127.0.0.1"
   udp = udptrans(IP)
@@ -66,3 +67,6 @@ if __name__ == '__main__':
         # time.sleep(1)
     except KeyboardInterrupt:
       udp.udpClntSock.close()
+
+if __name__ == '__main__':
+  trans_digits_test()

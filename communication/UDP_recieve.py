@@ -54,7 +54,7 @@ def recieve_digits_test():
       break
   udp.udpServSock.close()
 
-if __name__ == '__main__':
+def recieve_img_test():
   udp = udprecv()
   while True:
     try:
@@ -67,3 +67,7 @@ if __name__ == '__main__':
       print(e)
       break
   udp.udpServSock.close()
+
+
+if __name__ == '__main__':
+  recieve_digits_test()
