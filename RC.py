@@ -3,6 +3,7 @@ from communication import UDP_recieve, UDP_transmit
 from models.Driving import Driving
 from models.Steering import Steering
 from sensor.Camera import Camera
+import time
 
 class RC:
   def __init__(self):
@@ -41,7 +42,17 @@ class RC:
 
   def serve(self):
     print('start serving')
-    self.tc.conduct(self.serving, self.close)
+    # self.tc.conduct(self.serving, self.close)
+    while True:
+      try:
+        self.serving()
+        time.sleep(self.tc.sampling_time)
+
+      except KeyboardInterrupt:
+        self.close()
+        print('finish conduct')
+        break
+
 
 if __name__ == '__main__':
   rc = RC()
