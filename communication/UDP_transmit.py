@@ -16,20 +16,17 @@ class udptrans():
 
   def transmit_characters(self, data):
     send_data = data.encode('utf-8')
-    send = self.udpClntSock.sendto(send_data, self.DstAddr)
-    print(send)
+    self.udpClntSock.sendto(send_data, self.DstAddr)
 
   def transmit_digits(self, data):
     send_data = struct.pack('>ddd', data[0], data[1], data[2])
     print("send: ", struct.unpack('>ddd', send_data)) #送信したデータを送信側に表示
-    send = self.udpClntSock.sendto(send_data, self.DstAddr)
-    print(send)
+    self.udpClntSock.sendto(send_data, self.DstAddr)
 
   def transmit_img(self, frame, quality):
     encode_param = [int(cv2.IMWRITE_JPEG_QUALITY), quality]
     encoded_image = cv2.imencode('.jpeg', frame, encode_param)[1]
-    send = self.udpClntSock.sendto(encoded_image.tobytes(), self.DstAddr)
-    print(send)
+    self.udpClntSock.sendto(encoded_image.tobytes(), self.DstAddr)
 
   def socketClose(self):
     self.udpClntSock.close()
@@ -44,7 +41,7 @@ def trans_digits_test():
         data = [data_el, data_el, data_el]
         udp.transmit_digits(data)
         data_el += 1
-        time.sleep(1)
+        time.sleep(0.1)
       except KeyboardInterrupt:
         udp.udpClntSock.close()
         break
@@ -71,4 +68,4 @@ def trans_img_test():
       udp.udpClntSock.close()
 
 if __name__ == '__main__':
-  trans_img_test()
+  trans_digits_test()

@@ -3,13 +3,14 @@ from communication import UDP_recieve, UDP_transmit
 from models.Driving import Driving
 from models.Steering import Steering
 from sensor.Camera import Camera
-import time
+import threading
 
 class RC:
   def __init__(self):
     IP = "192.168.11.11"
     # IP = "127.0.0.1"
-    self.tc = TimeConductor()
+    self.tc_recv = TimeConductor()
+    self.tc_trans = TimeConductor()
     self.reciever = UDP_recieve.udprecv(blocking=False)
     self.transmitter = UDP_transmit.udptrans(IP)
     self.driving = Driving()
@@ -24,22 +25,40 @@ class RC:
     self.transmitter.transmit_img(frame, quality=20)
 
   def serving(self):
+    self.serving_recv()
+    self.serving_trans()
+
+  def serving_recv(self):
     data = self.reciever.receive_digits() # 0:steering, 1:accel, 2:break
     self.runActuator(data)
+
+  def serving_trans(self):
     frame = self.camera.capture()
     self.transmitSensor(frame)
     
   def close(self):
+    self.close_recv()
+    self.close_trans()
+    print('closed')
+
+  def close_recv(self):
     self.driving.stop()
     self.steering.stop()
-    self.camera.close()
     self.reciever.socketClose()
+
+  def close_trans(self):
+    self.camera.close()
     self.transmitter.socketClose()
-    print('closed')
 
   def serve(self):
     print('start serving')
-    self.tc.conduct(self.serving, self.close)
+    th_trans = threading.Thread(target=self.tc_trans.conduct, args=(self.serving_trans, self.close_trans, ))
+    th_trans.daemon = True
+    th_trans.start()
+
+    self.tc_recv.conduct(self.serving_recv, self.close_recv)
+    self.tc_trans.isConducting = False
+
 
 if __name__ == '__main__':
   rc = RC()
