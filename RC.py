@@ -11,11 +11,11 @@ class RC:
     # IP = "127.0.0.1"
     self.tc_recv = TimeConductor()
     self.tc_trans = TimeConductor()
-    self.reciever = UDP_recieve.udprecv(blocking=False)
+    self.reciever = UDP_recieve.udprecv()
     self.transmitter = UDP_transmit.udptrans(IP)
     self.driving = Driving()
     self.steering = Steering()
-    self.camera = Camera(FPS=int(1/self.tc.sampling_time))
+    self.camera = Camera(FPS=int(1/self.tc_trans.sampling_time))
 
   def runActuator(self, data):
     self.driving.actuate([data[1], data[2]])
