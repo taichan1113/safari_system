@@ -16,18 +16,20 @@ class udptrans():
 
   def transmit_characters(self, data):
     send_data = data.encode('utf-8')
-    self.udpClntSock.sendto(send_data, self.DstAddr)
+    send = self.udpClntSock.sendto(send_data, self.DstAddr)
+    print(send)
 
   def transmit_digits(self, data):
     send_data = struct.pack('>ddd', data[0], data[1], data[2])
     print("send: ", struct.unpack('>ddd', send_data)) #送信したデータを送信側に表示
-    self.udpClntSock.sendto(send_data, self.DstAddr)
+    send = self.udpClntSock.sendto(send_data, self.DstAddr)
+    print(send)
 
   def transmit_img(self, frame, quality):
     encode_param = [int(cv2.IMWRITE_JPEG_QUALITY), quality]
     encoded_image = cv2.imencode('.jpeg', frame, encode_param)[1]
-    self.udpClntSock.sendto(encoded_image.tobytes(), self.DstAddr)
-    # データを受信する:print(self.udpClntSock.recv(1024).decode('utf-8'))
+    send = self.udpClntSock.sendto(encoded_image.tobytes(), self.DstAddr)
+    print(send)
 
   def socketClose(self):
     self.udpClntSock.close()
@@ -69,4 +71,4 @@ def trans_img_test():
       udp.udpClntSock.close()
 
 if __name__ == '__main__':
-  trans_digits_test()
+  trans_img_test()

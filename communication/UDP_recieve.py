@@ -18,6 +18,7 @@ class udprecv():
   def receive(self):
     try:
       data, addr = self.udpServSock.recvfrom(self.BUFSIZE)
+      print(len(data))
       return data, addr
     except Exception as e:
       print(e)
@@ -34,7 +35,7 @@ class udprecv():
     return digits
 
   def receive_img(self):
-    img_buffer = 2**19
+    img_buffer = 2**15
     data, addr = self.udpServSock.recvfrom(img_buffer)
     np_arr = np.fromstring(data, np.uint8)
     img_decode = cv2.imdecode(np_arr, cv2.IMREAD_COLOR)
@@ -70,4 +71,4 @@ def recieve_img_test():
 
 
 if __name__ == '__main__':
-  recieve_digits_test()
+  recieve_img_test()
