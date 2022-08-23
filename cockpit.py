@@ -47,7 +47,7 @@ class UI:
     try:
       img = self.recv.receive_img()
       cv2.imshow('result', img)
-      cv2.waitKey(50) # msec
+      cv2.waitKey(10) # msec
     except:
       pass
 

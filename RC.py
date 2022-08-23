@@ -1,3 +1,5 @@
+import os
+from dotenv import load_dotenv
 from models.TimeConductor import TimeConductor
 from communication import UDP_recieve, UDP_transmit
 from models.Driving import Driving
@@ -5,9 +7,11 @@ from models.Steering import Steering
 from sensor.Camera import Camera
 import threading
 
+load_dotenv('./.env')
+
 class RC:
   def __init__(self):
-    IP = "192.168.11.11"
+    IP = os.getenv('MY_PC_OMEN')
     # IP = "127.0.0.1"
     self.tc_recv = TimeConductor(sampling_time=0)
     self.tc_trans = TimeConductor(sampling_time=0.05)
