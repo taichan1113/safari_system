@@ -62,14 +62,14 @@ class UI:
     print('closed')
 
   def run(self):
-    # self.tc.conduct(self.running, self.close)
-    try:
-      while True:
-        self.running()
-        time.sleep(self.tc.sampling_time)
-    except KeyboardInterrupt:
-      self.close()
-      print('finish conduct')
+    self.tc.conduct(self.running, self.close)
+    # try:
+    #   while True:
+    #     self.running()
+    #     time.sleep(self.tc.sampling_time)
+    # except KeyboardInterrupt:
+    #   self.close()
+    #   print('finish conduct')
 
 if __name__ == "__main__":
   ui = UI(type='joystick controller')

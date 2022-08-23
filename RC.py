@@ -4,13 +4,12 @@ from models.Driving import Driving
 from models.Steering import Steering
 # from sensor.Camera import Camera
 # import threading
-import time
 
 class RC:
   def __init__(self):
     # IP = "192.168.11.11"
     # IP = "127.0.0.1"
-    self.tc_recv = TimeConductor()
+    self.tc_recv = TimeConductor(sampling_time=0)
     self.reciever = UDP_recieve.udprecv()
     self.driving = Driving()
     self.steering = Steering()
@@ -54,15 +53,15 @@ class RC:
     # th_trans.daemon = True
     # th_trans.start()
 
-    # self.tc_recv.conduct(self.serving_recv, self.close_recv)
+    self.tc_recv.conduct(self.serving_recv, self.close_recv)
     # self.tc_trans.isConducting = False
 
-    try:
-      while True:
-        self.serving_recv()
-    except KeyboardInterrupt:
-      self.close_recv()
-      print('finish conduct')
+    # try:
+    #   while True:
+    #     self.serving_recv()
+    # except KeyboardInterrupt:
+    #   self.close_recv()
+    #   print('finish conduct')
 
 
 if __name__ == '__main__':
