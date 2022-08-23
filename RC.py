@@ -15,7 +15,7 @@ class RC:
     self.transmitter = UDP_transmit.udptrans(IP=IP)
     self.driving = Driving()
     self.steering = Steering()
-    self.camera = Camera()
+    self.camera = Camera(FPS=int(1/self.tc_trans.sampling_time))
 
   def runActuator(self, data):
     self.driving.actuate([data[1], data[2]])
