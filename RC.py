@@ -4,6 +4,7 @@ from models.Driving import Driving
 from models.Steering import Steering
 # from sensor.Camera import Camera
 # import threading
+import time
 
 class RC:
   def __init__(self):
@@ -23,7 +24,7 @@ class RC:
 
   def serving(self):
     self.serving_recv()
-    self.serving_trans()
+    # self.serving_trans()
 
   def serving_recv(self):
     data = self.reciever.receive_digits() # 0:steering, 1:accel, 2:break
@@ -53,8 +54,16 @@ class RC:
     # th_trans.daemon = True
     # th_trans.start()
 
-    self.tc_recv.conduct(self.serving_recv, self.close_recv)
+    # self.tc_recv.conduct(self.serving_recv, self.close_recv)
     # self.tc_trans.isConducting = False
+
+    try:
+      while True:
+        self.serving_recv()
+        time.sleep(self.tc_recv.sampling_time)
+    except KeyboardInterrupt:
+      self.close_recv()
+      print('finish conduct')
 
 
 if __name__ == '__main__':
