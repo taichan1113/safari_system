@@ -35,7 +35,7 @@ class udprecv():
     return digits
 
   def receive_img(self):
-    img_buffer = 2**15
+    img_buffer = 2**19
     data, addr = self.udpServSock.recvfrom(img_buffer)
     np_arr = np.fromstring(data, np.uint8)
     img_decode = cv2.imdecode(np_arr, cv2.IMREAD_COLOR)

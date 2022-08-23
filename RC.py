@@ -26,7 +26,7 @@ class RC:
     self.steering.actuate(data[0])
 
   def transmitSensor(self, frame):
-    self.transmitter.transmit_img(frame, quality=20)
+    self.transmitter.transmit_img(frame, quality=15)
 
   # def serving(self):
   #   self.serving_recv()
