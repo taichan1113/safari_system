@@ -60,7 +60,6 @@ class RC:
     try:
       while True:
         self.serving_recv()
-        time.sleep(self.tc_recv.sampling_time)
     except KeyboardInterrupt:
       self.close_recv()
       print('finish conduct')
