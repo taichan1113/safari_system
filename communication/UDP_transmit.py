@@ -68,4 +68,4 @@ def trans_img_test():
       udp.udpClntSock.close()
 
 if __name__ == '__main__':
-  trans_digits_test()
+  trans_img_test()
