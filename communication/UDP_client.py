@@ -20,6 +20,6 @@ try:
     img = getimage()
     # print(img)
     cv2.imshow('result', img)
-    cv2.waitKey(1)
+    cv2.waitKey(30)
 except KeyboardInterrupt:
   print('finished')
