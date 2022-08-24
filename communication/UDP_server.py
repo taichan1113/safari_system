@@ -2,7 +2,7 @@ import socketserver
 import cv2
 
 class MyUDPHandler(socketserver.BaseRequestHandler):
-    videoCap = ''
+    capture = ''
 
     """
     This class works similar to the TCP handler class, except that
@@ -17,7 +17,7 @@ class MyUDPHandler(socketserver.BaseRequestHandler):
         print(data)
 
         # readするたびにビデオのフレームを取得
-        ret, frame = videoCap.read()
+        ret, frame = capture.read()
 
         # jpegの圧縮率を設定 0～100値が高いほど高品質。何も指定しなければ95
         encode_param = [int(cv2.IMWRITE_JPEG_QUALITY), 30]
@@ -27,7 +27,10 @@ class MyUDPHandler(socketserver.BaseRequestHandler):
         socket.sendto(jpegsByte, self.client_address)
 
 if __name__ == "__main__":
-    HOST, PORT = "localhost", 9999
-    videoCap = cv2.VideoCapture(0)
+    HOST, PORT = "192.168.11.16", 9999
+    capture = cv2.VideoCapture(0)
+    capture.set(cv2.CAP_PROP_FRAME_WIDTH, 1920*0.6)
+    capture.set(cv2.CAP_PROP_FRAME_HEIGHT, 1080*0.6)
+    capture.set(cv2.CAP_PROP_FOURCC, cv2.VideoWriter_fourcc('H', '2', '6', '4'))
     with socketserver.UDPServer((HOST, PORT), MyUDPHandler) as server:
         server.serve_forever()

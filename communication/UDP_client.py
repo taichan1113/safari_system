@@ -4,7 +4,7 @@ import cv2
 
 
 def getimage():
-  HOST, PORT = "localhost", 9999
+  HOST, PORT = "192.168.11.16", 9999
   # SOCK_DGRAM is the socket type to use for UDP sockets
   sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
   # As you can see, there is no connect() call; UDP has no connections.
