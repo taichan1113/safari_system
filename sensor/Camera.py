@@ -3,8 +3,8 @@ import cv2
 class Camera():
   def __init__(self, FPS):
     self.cap = cv2.VideoCapture(0)
-    self.cap.set(cv2.CAP_PROP_FRAME_WIDTH, 1920*0.7)
-    self.cap.set(cv2.CAP_PROP_FRAME_HEIGHT, 1080*0.7)
+    self.cap.set(cv2.CAP_PROP_FRAME_WIDTH, 1920*0.6)
+    self.cap.set(cv2.CAP_PROP_FRAME_HEIGHT, 1080*0.6)
     self.cap.set(cv2.CAP_PROP_FOURCC, cv2.VideoWriter_fourcc('H', '2', '6', '4'))
     self.cap.set(cv2.CAP_PROP_FPS,FPS)
 

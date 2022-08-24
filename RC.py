@@ -14,19 +14,19 @@ class RC:
     IP = os.getenv('MY_PC_OMEN')
     # IP = "127.0.0.1"
     self.tc_recv = TimeConductor(sampling_time=0)
-    self.tc_trans = TimeConductor(sampling_time=0.05)
+    self.tc_trans = TimeConductor(sampling_time=0)
     self.reciever = UDP_recieve.udprecv()
     self.transmitter = UDP_transmit.udptrans(IP=IP)
     self.driving = Driving()
     self.steering = Steering()
-    self.camera = Camera(FPS=int(1/self.tc_trans.sampling_time))
+    self.camera = Camera(FPS=30)
 
   def runActuator(self, data):
     self.driving.actuate([data[1], data[2]])
     self.steering.actuate(data[0])
 
   def transmitSensor(self, frame):
-    self.transmitter.transmit_img(frame, quality=15)
+    self.transmitter.transmit_img(frame, quality=30)
 
   # def serving(self):
   #   self.serving_recv()
