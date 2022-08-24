@@ -10,28 +10,16 @@ def getimage():
   # As you can see, there is no connect() call; UDP has no connections.
   # Instead, data is directly sent to the recipient via sendto().
   sock.sendto(b'test', (HOST, PORT))
-
-  # バイト型
-  # buf=b''   
-  # recvlen=100  
-  # while recvlen>0:  
-  #   # received = str(sock.recv(1024), "utf-8")
-  #   # receivedstr=sock.recv(1024)  
-  #   receivedstr=sock.recv(2**15)
-  #   recvlen=len(receivedstr)  
-  #   buf += receivedstr
-  # sock.close()
-
   byteData = sock.recv(2**19)
   narray=numpy.fromstring(byteData, numpy.uint8)
   img_decode = cv2.imdecode(narray, cv2.IMREAD_COLOR)
   return img_decode
 
-while True:
-  try:
+try:
+  while True:
     img = getimage()
     # print(img)
     cv2.imshow('result', img)
     cv2.waitKey(1)
-  except KeyboardInterrupt:
-    print('finished')
+except KeyboardInterrupt:
+  print('finished')
