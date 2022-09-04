@@ -34,8 +34,9 @@ class RC:
     self.runActuator(data)
 
   def serving_trans(self):
-    frame = self.camera.capture()
-    self.transmitSensor(frame)
+    # frame = self.camera.capture()
+    # self.transmitSensor(frame)
+    return
 
   def close_recv(self):
     self.driving.stop()
@@ -43,7 +44,7 @@ class RC:
     self.reciever.socketClose()
 
   def close_trans(self):
-    self.camera.close()
+    # self.camera.close()
     self.transmitter.socketClose()
 
   def serve(self):
