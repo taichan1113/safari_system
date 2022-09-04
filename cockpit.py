@@ -74,14 +74,6 @@ class UI:
     self.tc_trans.conduct(self.running_trans, self.close_trans)
     self.tc_recv.isConducting = False
 
-    # try:
-    #   while True:
-    #     self.running()
-    #     time.sleep(self.tc.sampling_time)
-    # except KeyboardInterrupt:
-    #   self.close()
-    #   print('finish conduct')
-
 if __name__ == "__main__":
   ui = UI(type='joystick controller')
   ui.run()

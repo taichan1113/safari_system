@@ -19,18 +19,15 @@ class RC:
     self.transmitter = UDP_transmit.udptrans(IP=IP)
     self.driving = Driving()
     self.steering = Steering()
-    self.camera = Camera(FPS=30)
+    # self.camera = Camera(FPS=30)
 
   def runActuator(self, data):
     self.driving.actuate([data[1], data[2]])
     self.steering.actuate(data[0])
 
   def transmitSensor(self, frame):
-    self.transmitter.transmit_img(frame, quality=30)
-
-  # def serving(self):
-  #   self.serving_recv()
-    # self.serving_trans()
+    # self.transmitter.transmit_img(frame, quality=30)
+    return
 
   def serving_recv(self):
     data = self.reciever.receive_digits() # 0:steering, 1:accel, 2:break
@@ -39,11 +36,6 @@ class RC:
   def serving_trans(self):
     frame = self.camera.capture()
     self.transmitSensor(frame)
-    
-  # def close(self):
-  #   self.close_recv()
-  #   self.close_trans()
-  #   print('closed')
 
   def close_recv(self):
     self.driving.stop()
@@ -63,28 +55,7 @@ class RC:
     self.tc_recv.conduct(self.serving_recv, self.close_recv)
     self.tc_trans.isConducting = False
 
-    # try:
-    #   while True:
-    #     self.serving_recv()
-    # except KeyboardInterrupt:
-    #   self.close_recv()
-    #   print('finish conduct')
-
-
 if __name__ == '__main__':
   rc = RC()
   rc.serve()
   print('finish safely')
-
-# from models.TimeConductor import TimeConductor
-
-# tc = TimeConductor()
-# dl = DataLogger()
-# dl.isLogging = True
-# 
-# thread_logger = threading.Thread(target=dl.log)
-# thread_logger.daemon = True
-# thread_logger.start()
-
-# tc.conduct()
-# dl.isLogging = False
