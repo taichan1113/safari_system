@@ -39,6 +39,7 @@ class RC:
 
   def serving_recv(self):
     data = self.reciever.receive_digits() # 0:steering, 1:accel, 2:break
+    print(data)
     self.runActuator(data)
 
   def serving_trans(self):
