@@ -18,7 +18,6 @@ class udprecv():
   def receive(self):
     try:
       data, addr = self.udpServSock.recvfrom(self.BUFSIZE)
-      print(len(data))
       return data, addr
     except Exception as e:
       print(e)
@@ -28,10 +27,9 @@ class udprecv():
     data, addr = self.receive()
     return data.decode()
 
-  def receive_digits(self):
+  def receive_digits(self, format='>ddd'):
     data, addr = self.receive()
-    digits = struct.unpack('>ddd' , data)
-    print(digits)
+    digits = struct.unpack(format, data)
     return digits
 
   def receive_img(self):

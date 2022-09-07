@@ -5,6 +5,7 @@ from communication import UDP_recieve, UDP_transmit
 from models.Driving import Driving
 from models.Steering import Steering
 from sensor.Camera import Camera
+from sensor.mpu6050 import mpu6050
 import threading
 
 load_dotenv('./.env')
@@ -20,22 +21,29 @@ class RC:
     self.driving = Driving()
     self.steering = Steering()
     # self.camera = Camera(FPS=30)
+    self.accgyro = mpu6050(0x69)
 
   def runActuator(self, data):
     self.driving.actuate([data[1], data[2]])
     self.steering.actuate(data[0])
 
-  def transmitSensor(self, frame):
-    # self.transmitter.transmit_img(frame, quality=30)
-    return
+  def transmitImg(self):
+    frame = self.camera.capture()
+    self.transmitter.transmit_img(frame, quality=30)
+
+  def transmitGyro(self):
+    # acc_data = self.accgyro.get_accel_data()
+    gyro_data = self.accgyro.get_gyro_data()
+    data = [gyro_data['x'], gyro_data['y'], gyro_data['z']]
+    self.transmitter.transmit_digits(data)
 
   def serving_recv(self):
     data = self.reciever.receive_digits() # 0:steering, 1:accel, 2:break
     self.runActuator(data)
 
   def serving_trans(self):
-    # frame = self.camera.capture()
-    # self.transmitSensor(frame)
+    # self.transmitImg()
+    self.transmitGyro()
     return
 
   def close_recv(self):

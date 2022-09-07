@@ -51,19 +51,24 @@ class UI:
     except:
       pass
 
+  def showGyro(self):
+    data = self.recv.receive_digits()
+    print(data)
+
   def running_trans(self):
     self.trans.transmit_digits(self.getSignal())
     pygame.event.clear()
 
   def running_recv(self):
-    self.showCapture()
+    # self.showCapture()
+    self.showGyro()
 
   def close_trans(self):
     self.trans.socketClose()
-    print('closed')
+    print('transmitter closed')
 
   def close_recv(self):
-    cv2.destroyAllWindows()
+    # cv2.destroyAllWindows()
     self.recv.socketClose()
 
   def run(self):
