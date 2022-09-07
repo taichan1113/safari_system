@@ -20,7 +20,7 @@ class UI:
     self.joystick.init()
     self.printJoystickInfo()
     self.trans = UDP_transmit.udptrans(IP=IP)
-    self.recv = UDP_recieve.udprecv(blocking=False)
+    self.recv = UDP_recieve.udprecv(blocking=True)
 
   def printJoystickInfo(self):
     print(f'ジョイスティック名前: {self.joystick.get_name()}')
@@ -52,7 +52,7 @@ class UI:
       pass
 
   def showGyro(self):
-    data = self.recv.receive_digits()
+    data = self.recv.receive_digits('>iii')
     print(data)
 
   def running_trans(self):

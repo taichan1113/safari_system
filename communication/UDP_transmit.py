@@ -20,7 +20,7 @@ class udptrans():
 
   def transmit_digits(self, data, format='>ddd'):
     send_data = struct.pack(format, data[0], data[1], data[2])
-    print("send: ", struct.unpack(format, send_data)) #送信したデータを送信側に表示
+    # print("send: ", struct.unpack(format, send_data)) #送信したデータを送信側に表示
     self.udpClntSock.sendto(send_data, self.DstAddr)
 
   def transmit_img(self, frame, quality):

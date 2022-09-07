@@ -35,7 +35,7 @@ class RC:
     # acc_data = self.accgyro.get_accel_data()
     gyro_data = self.accgyro.get_gyro_data()
     data = [int(round(10*gyro_data['x'])), int(round(10*gyro_data['y'])), int(round(10*gyro_data['z']))]
-    self.transmitter.transmit_digits(data)
+    self.transmitter.transmit_digits(data, '>iii')
 
   def serving_recv(self):
     data = self.reciever.receive_digits() # 0:steering, 1:accel, 2:break
