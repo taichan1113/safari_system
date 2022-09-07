@@ -15,7 +15,7 @@ class RC:
     IP = os.getenv('MY_PC_OMEN')
     # IP = "127.0.0.1"
     self.tc_recv = TimeConductor(sampling_time=0)
-    self.tc_trans = TimeConductor(sampling_time=0)
+    self.tc_trans = TimeConductor(sampling_time=0.05)
     self.reciever = UDP_recieve.udprecv()
     self.transmitter = UDP_transmit.udptrans(IP=IP)
     self.driving = Driving()
@@ -34,7 +34,7 @@ class RC:
   def transmitGyro(self):
     # acc_data = self.accgyro.get_accel_data()
     gyro_data = self.accgyro.get_gyro_data()
-    data = [gyro_data['x'], gyro_data['y'], gyro_data['z']]
+    data = [int(round(10*gyro_data['x'])), int(round(10*gyro_data['y'])), int(round(10*gyro_data['z']))]
     self.transmitter.transmit_digits(data)
 
   def serving_recv(self):
