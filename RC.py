@@ -12,12 +12,13 @@ load_dotenv('./.env')
 
 class RC:
   def __init__(self):
-    IP = os.getenv('MY_PC_OMEN')
+    IP = os.getenv('KOJIMA_MICON_IP')
+    PORT = int(os.getenv('KOJIMA_MICON_PORT'))
     # IP = "127.0.0.1"
     self.tc_recv = TimeConductor(sampling_time=0)
     self.tc_trans = TimeConductor(sampling_time=0.05)
     self.reciever = UDP_recieve.udprecv()
-    self.transmitter = UDP_transmit.udptrans(IP=IP)
+    self.transmitter = UDP_transmit.udptrans(IP=IP, PORT=PORT)
     self.driving = Driving()
     self.steering = Steering()
     # self.camera = Camera(FPS=30)
@@ -34,7 +35,7 @@ class RC:
   def transmitGyro(self):
     # acc_data = self.accgyro.get_accel_data()
     gyro_data = self.accgyro.get_gyro_data()
-    data = [int(round(10*gyro_data['x'])), int(round(10*gyro_data['y'])), int(round(10*gyro_data['z']))]
+    data = [int(round(gyro_data['x'])), int(round(gyro_data['y'])), int(round(gyro_data['z']))]
     self.transmitter.transmit_digits(data, '>iii')
 
   def serving_recv(self):
