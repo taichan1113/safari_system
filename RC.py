@@ -13,7 +13,7 @@ load_dotenv('./.env')
 class RC:
   def __init__(self):
     IP = os.getenv('OMEN_IP')
-    PORT = os.getenv('OMEN_PORT')
+    PORT = int(os.getenv('OMEN_PORT'))
     # IP = "127.0.0.1"
     self.tc_recv = TimeConductor(sampling_time=0)
     self.tc_trans = TimeConductor(sampling_time=0.05)
