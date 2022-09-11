@@ -13,8 +13,8 @@ load_dotenv('./.env')
 class RC:
   trans_thread_id = -1
   def __init__(self):
-    IP = os.getenv('KOJIMA_MICON_IP')
-    PORT = int(os.getenv('KOJIMA_MICON_PORT'))
+    IP = os.getenv('OMEN_IP')
+    PORT = int(os.getenv('OMEN_PORT'))
     # IP = "127.0.0.1"
     self.tc_recv = TimeConductor(sampling_time=0)
     self.tc_trans = TimeConductor(sampling_time=0.05)
