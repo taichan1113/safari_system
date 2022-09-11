@@ -11,6 +11,7 @@ import threading
 load_dotenv('./.env')
 
 class RC:
+  trans_thread_id = -1
   def __init__(self):
     IP = os.getenv('KOJIMA_MICON_IP')
     PORT = int(os.getenv('KOJIMA_MICON_PORT'))
@@ -39,8 +40,11 @@ class RC:
     self.transmitter.transmit_digits(data, '>iii')
 
   def serving_recv(self):
+    self.start_transThread() # kojima
+
     data = self.reciever.receive_digits() # 0:steering, 1:accel, 2:break
     print(data)
+    print( threading.enumerate()) # kojima
     self.runActuator(data)
 
   def serving_trans(self):
@@ -58,13 +62,18 @@ class RC:
     self.transmitter.socketClose()
 
   def serve(self):
-    print('start serving')
-    th_trans = threading.Thread(target=self.tc_trans.conduct, args=(self.serving_trans, self.close_trans, ))
-    th_trans.daemon = True
-    th_trans.start()
-
     self.tc_recv.conduct(self.serving_recv, self.close_recv)
     self.tc_trans.isConducting = False
+
+
+  def start_transThread(self): # kojima
+    for thread in threading.enumerate(): # check TransThread exist
+        if thread.ident == self.trans_thread_id :
+            return
+    th_trans = threading.Thread(target=self.tc_trans.conduct, args=(self.serving_trans, self.close_trans, )) # not exist
+    th_trans.daemon = True
+    th_trans.start()
+    self.trans_thread_id = th_trans.ident
 
 if __name__ == '__main__':
   rc = RC()
