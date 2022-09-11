@@ -12,12 +12,13 @@ load_dotenv('./.env')
 
 class RC:
   def __init__(self):
-    IP = os.getenv('MY_PC_OMEN')
+    IP = os.getenv('OMEN_IP')
+    PORT = os.getenv('OMEN_PORT')
     # IP = "127.0.0.1"
     self.tc_recv = TimeConductor(sampling_time=0)
     self.tc_trans = TimeConductor(sampling_time=0.05)
     self.reciever = UDP_recieve.udprecv()
-    self.transmitter = UDP_transmit.udptrans(IP=IP)
+    self.transmitter = UDP_transmit.udptrans(IP=IP, PORT=PORT)
     self.driving = Driving()
     self.steering = Steering()
     # self.camera = Camera(FPS=30)

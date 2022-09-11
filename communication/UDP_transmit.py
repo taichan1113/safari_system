@@ -6,9 +6,9 @@ import struct
 
 ## UDP送信クラス
 class udptrans():
-  def __init__(self, IP):
+  def __init__(self, IP, PORT=22222):
     DstIP = IP
-    DstPort = 22222
+    DstPort = PORT
     self.DstAddr = (DstIP, DstPort)
 
     self.udpClntSock = socket(AF_INET, SOCK_DGRAM)
